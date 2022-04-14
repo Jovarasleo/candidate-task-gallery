@@ -6,18 +6,11 @@ const FavouritesContext = createContext();
 function FavouritesProvider({ children }) {
   const [favourites, setFavourites] = useState([]);
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem(FAVOURITES_KEY));
-    if (data) {
-      setFavourites(data);
-    }
+    const data = JSON.parse(localStorage.getItem(FAVOURITES_KEY)) || [];
+    setFavourites(data);
   }, []);
-  useEffect(() => {
-    localStorage.setItem(FAVOURITES_KEY, JSON.stringify(favourites));
-  }, [favourites]);
 
-  console.log(favourites);
   const toggleFavourite = (id) => {
-    console.log(id);
     let newFavourites = null;
     if (favourites.includes(id)) {
       newFavourites = favourites.filter((photoId) => id !== photoId);

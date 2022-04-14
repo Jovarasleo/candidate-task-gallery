@@ -11,35 +11,26 @@ import BigImage from "./components/bigImage";
 const Home = () => {
   const [portraitImages, setPortraitImages] = useState([]);
   const [landscapeImages, setLandscapeImages] = useState([]);
-  const [myData, setmyData] = useState(null);
-  const [isLoading, setLoading] = useState(true);
 
-  const [allImages, setAllImages] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 
   const [error, setError] = useState("");
 
-  const [isTesting, setIsTesting] = useState(false);
+  const [isTesting, setIsTesting] = useState(true);
 
   const [showImage, setShowImage] = useState(false);
-  const [imgId, setImgId] = useState("");
+  const [image, setImage] = useState("");
 
   const openImage = (id) => {
     setShowImage(true);
-    setImgId(id);
-    console.log(imgId);
+    setImage(id);
+    console.log(id);
   };
   const testing = () => {
     if (isTesting) {
       setPortraitImages([...portraitImages, ...randomPortrait]);
       setLandscapeImages([...landscapeImages, ...randomLandscape]);
-      setAllImages([
-        ...portraitImages,
-        ...randomPortrait,
-        ...landscapeImages,
-        ...randomLandscape,
-      ]);
       setLoading(false);
-      console.log("pust to array");
     }
     if (!isTesting) {
       getPhotos();
@@ -52,7 +43,6 @@ const Home = () => {
     try {
       const data = await response1.json();
       setLandscapeImages([...landscapeImages, ...data]);
-      setAllImages([...allImages, ...data]);
     } catch (error) {
       setError(error);
     }
@@ -62,7 +52,6 @@ const Home = () => {
     try {
       const data = await response2.json();
       setPortraitImages([...portraitImages, ...data]);
-      setAllImages([...allImages, ...data]);
     } catch (error) {
       setError(error);
     }
@@ -80,17 +69,15 @@ const Home = () => {
   };
   useEffect(() => {
     if (isLoading) {
-      console.log("useEffect called inside loading IF", allImages);
       testing();
     }
-    console.log(allImages);
     if (window) {
       window.addEventListener("scroll", handleScroll, true);
     }
     if (showImage) {
       document.body.style.overflow = "hidden";
     } else document.body.style.overflow = "";
-  }, [showImage, isLoading, allImages]);
+  }, [showImage, isLoading]);
 
   return (
     <div className={styles.container}>
@@ -100,18 +87,20 @@ const Home = () => {
             return (
               <div className={styles.cardsWrapper} key={index}>
                 <ImageCard
+                  image={portraitImages[index]}
                   key={portraitImages[index]?.id}
                   img={portraitImages[index]?.urls?.thumb}
                   className={styles.seperator.concat(" ", styles.portrait)}
-                  onClick={() => openImage(portraitImages[index]?.id)}
+                  onClick={() => openImage(portraitImages[index])}
                   showImage={showImage}
                   setShowImage={setShowImage}
                 />
                 <ImageCard
+                  image={image}
                   key={image?.id}
                   img={image?.urls?.thumb}
                   className={styles.landscape}
-                  onClick={() => openImage(image?.id)}
+                  onClick={() => openImage(image)}
                   showImage={showImage}
                   setShowImage={setShowImage}
                 />
@@ -122,18 +111,20 @@ const Home = () => {
             return (
               <div className={styles.cardsWrapper} key={index}>
                 <ImageCard
+                  image={image}
                   key={image?.id}
                   img={image?.urls?.thumb}
                   className={styles.seperator.concat(" ", styles.landscape)}
-                  onClick={() => openImage(image?.id)}
+                  onClick={() => openImage(image)}
                   showImage={showImage}
                   setShowImage={setShowImage}
                 />
                 <ImageCard
+                  image={portraitImages[index]}
                   key={portraitImages[index]?.id}
                   img={portraitImages[index]?.urls?.thumb}
                   className={styles.portrait}
-                  onClick={() => openImage(portraitImages[index]?.id)}
+                  onClick={() => openImage(portraitImages[index])}
                   showImage={showImage}
                   setShowImage={setShowImage}
                 />
@@ -144,9 +135,10 @@ const Home = () => {
       </main>
       {showImage ? (
         <BigImage
-          image={imgId}
+          image={image}
           onClick={() => setShowImage(false)}
-          allImages={allImages}
+          portraitImages={portraitImages}
+          landscapeImages={landscapeImages}
         />
       ) : null}
       <footer className={styles.footer}></footer>
