@@ -19,8 +19,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/api/fetchRandom.jsx",
-    "pages/index.jsx"
+    "pages/api/fetchLandscapeImages.jsx",
+    "public/index.jsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,13 +1,6 @@
 import styles from "./index.module.css";
-import BigImage from "../bigImage";
-function ImageCard({
-  img,
-  style,
-  className,
-  onClick,
-  showImage,
-  setShowImage,
-}) {
+
+function ImageCard({ img, style, className, onClick }) {
   const newClass = styles.imageWrapper.concat(" ", className);
   return (
     <>
