@@ -7,10 +7,10 @@ function ImageCard({ img, style, className, onClick, image }) {
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
   const handleClick = (e) => {
     console.log(image);
-    toggleFavourite(image?.id);
+    toggleFavourite(image);
     e.stopPropagation();
   };
-  const isFavourite = favourites.includes(image?.id);
+  const isFavourite = favourites.some((item) => item.id === image?.id);
   return (
     <>
       <div className={newClass} style={style} onClick={onClick}>

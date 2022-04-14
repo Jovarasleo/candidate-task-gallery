@@ -10,12 +10,12 @@ function FavouritesProvider({ children }) {
     setFavourites(data);
   }, []);
 
-  const toggleFavourite = (id) => {
+  const toggleFavourite = (photoObj) => {
     let newFavourites = null;
-    if (favourites.includes(id)) {
-      newFavourites = favourites.filter((photoId) => id !== photoId);
+    if (favourites.some((item) => item.id === photoObj.id)) {
+      newFavourites = favourites.filter((photo) => photoObj.id !== photo.id);
     } else {
-      newFavourites = [...favourites, id];
+      newFavourites = [...favourites, photoObj];
     }
     setFavourites(newFavourites);
     localStorage.setItem(FAVOURITES_KEY, JSON.stringify(newFavourites));
