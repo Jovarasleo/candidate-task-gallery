@@ -4,22 +4,129 @@
   left: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(207, 207, 207, 0.144);
+  background-color: var(--dropdown);
+}
+.closeButton {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  padding: 0;
+}
+.closeButton:before,
+.closeButton:after {
+  left: 45%;
+  top: -4px;
+  position: absolute;
+  content: " ";
+  height: 32px;
+  width: 2px;
+  background-color: #717171;
+}
+.closeButton:before {
+  transform: rotate(45deg);
+}
+.closeButton:after {
+  transform: rotate(-45deg);
 }
 .bigImageWrapper {
   margin-right: 40px;
+  height: 714px;
   position: relative;
   max-width: 1200px;
   object-fit: contain;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: auto;
   display: flex;
-  background-color: black;
 }
-.bigImageWrapper img {
-  object-fit: contain;
+.imageWrapper {
+  backdrop-filter: blur(6px);
+  background-color: var(--secondaryDropdown);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 50%;
-  max-height: 100vh;
+  object-fit: contain;
+}
+.imageWrapper img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+.infoWrapper {
+  width: 50%;
+  background-color: black;
+  padding: 67px 64px 45px 58px;
+}
+.infoAuthor {
+  display: flex;
+}
+.infoAuthor__inner {
+  display: flex;
+  flex-direction: column;
+}
+.infoAuthor__inner p {
+  margin: 0;
+}
+.infoStatistics {
+  display: flex;
+}
+.infoStatistics p {
+  margin-right: 30px;
+}
+.infoCamera {
+  display: flex;
+  flex-wrap: wrap;
+}
+.infoCamera div {
+  margin-right: 30px;
+}
+.favouriteButton {
+  margin-left: auto;
+  cursor: pointer;
+  background-color: #118dba;
+  border: none;
+  width: 50px;
+  height: 50px;
+}
+.favouriteButton svg {
+  color: white;
+  width: 22px;
+  height: 22px;
+}
+.sectionName {
+  text-align: left;
+  font: normal normal bold 12px/35px Sen;
+  letter-spacing: 0px;
+  color: #adadad;
+}
+.innerName {
+  color: var(--accent);
+  text-align: left;
+  font: normal normal bold 24px/35px Sen;
+  letter-spacing: 0px;
+  color: #118dba;
+}
+@media screen and (-ms-high-contrast: active),
+  screen and (-ms-high-contrast: none) {
+  .imageBackdrop {
+    z-index: 1;
+  }
+  .imageWrapper {
+    display: flex;
+  }
+  .imageWrapper img {
+    max-height: 100%;
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    flex-shrink: 0;
+    -ms-interpolation-mode: bicubic;
+  }
 }

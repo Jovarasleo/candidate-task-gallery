@@ -30,17 +30,27 @@ const accessKey = process.env.API_KEY;
 //   });
 // };
 
-export default async (req, res) => {
+const getImages = async (req, res) => {
   console.log("fetch landscape backend");
   const unsplash = createApi({
     accessKey: accessKey,
   });
-  let random = unsplash.photos.getRandom({
-    featured: true,
+  const landscape = unsplash.photos.getRandom({
     orientation: "landscape",
     count: 20,
   });
-
-  let result = await random;
-  return res.status(200).json(result.response);
+  const portrait = unsplash.photos.getRandom({
+    orientation: "portrait",
+    count: 20,
+  });
+  const landscapeResult = await landscape;
+  const portraitResult = await portrait;
+  if (landscapeResult.status === 200 && portraitResult.status === 200) {
+    const data = {
+      landscape: landscapeResult.response,
+      portrait: portraitResult.response,
+    };
+    return res.status(200).json({ success: true, images: data });
+  } else res.status(400).json({ success: false, error: "Bad request" });
 };
+export default getImages;

@@ -5,27 +5,44 @@
   position: relative;
   background-color: rgb(24, 24, 24);
 }
-
-.main {
-  margin: 2rem auto;
+.gallery {
   max-width: 1450px;
   display: flex;
   flex-wrap: wrap;
   grid-gap: 25px;
+  margin-left: 100px;
+  margin-top: 25px;
+}
+.navbar {
+  width: 80px;
+  background-color: azure;
+  position: fixed;
+  height: 100vh;
+  display: flex;
+}
+.navWrapper {
+  margin: auto;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
 }
+.navbar button {
+  height: 60px;
+  width: 60px;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(211, 211, 211);
+  transition-duration: 300ms;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+.navbar button:hover {
+  background-color: rgb(73, 73, 73);
+  color: white;
+}
 .seperator {
-  /* flex: 4; */
   margin-bottom: 25px;
-}
-/* .flex1 {
-  flex: 1;
-} */
-.landscape {
-  height: 140px;
-}
-.portrait {
-  height: 275px;
 }
 @media screen and (-ms-high-contrast: active),
   screen and (-ms-high-contrast: none) {
@@ -34,16 +51,9 @@
     margin-bottom: 25px;
   }
 }
-
-/* .landscape img {
-  object-fit: cover;
-}
-.portrait img {
-  object-fit: cover;
-} */
 .cardsWrapper {
-  max-height: 440px;
-  width: 220px;
+  max-height: 550px;
+  width: 270px;
 }
 @media (max-width: 600px) {
   .grid {
