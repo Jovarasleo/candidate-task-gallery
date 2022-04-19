@@ -4,7 +4,7 @@ import FavouritesContext from "../../../context/FavouritesContext";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { MdDownload } from "react-icons/md";
 import { IoEye } from "react-icons/io5";
-
+import Link from "next/link";
 function BigImage({ image, onClick }) {
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
   const isFavourite = favourites.some((item) => item.id === image?.id);
@@ -22,14 +22,19 @@ function BigImage({ image, onClick }) {
     URL.revokeObjectURL(imageURL);
     link.remove();
   };
-
+  function goToImage(id) {
+    document.location.href = id;
+  }
   return (
     <div className={styles.imageBackdrop} onClick={onClick}>
       <div
         className={styles.bigImageWrapper}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className={styles.imageWrapper}>
+        <div
+          className={styles.imageWrapper}
+          onDoubleClick={() => goToImage(image?.urls?.full)}
+        >
           <img src={image?.urls?.regular} alt="" />
         </div>
         <div className={styles.infoWrapper}>

@@ -4,7 +4,11 @@
   left: 0;
   top: 0;
   bottom: 0;
+  background-color: rgba(24, 24, 24, 0.781);
   background-color: var(--dropdown);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .closeButton {
   background-color: transparent;
@@ -35,18 +39,15 @@
   transform: rotate(-45deg);
 }
 .bigImageWrapper {
-  margin-right: 40px;
-  height: 714px;
   position: relative;
+  height: 714px;
   max-width: 1200px;
   object-fit: contain;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
 }
 .imageWrapper {
   backdrop-filter: blur(6px);
+  background-color: rgba(15, 15, 15, 0.847);
   background-color: var(--secondaryDropdown);
   display: flex;
   justify-content: center;
@@ -128,5 +129,35 @@
     width: auto;
     flex-shrink: 0;
     -ms-interpolation-mode: bicubic;
+  }
+}
+@media screen and (min-width: 1600px) and (min-height: 1000px) {
+  .bigImageWrapper {
+    height: 900px;
+    max-width: 1600px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .bigImageWrapper {
+    flex-direction: column;
+    max-height: 100vh;
+    height: auto;
+    width: 100%;
+  }
+  .imageWrapper {
+    width: 100%;
+    height: 50vh;
+    margin: 0 auto;
+  }
+  .infoWrapper {
+    padding: 10px;
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+  }
+  .infoCamera div {
+    display: flex;
+    flex-direction: column;
   }
 }

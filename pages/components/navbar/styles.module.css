@@ -1,0 +1,71 @@
+.navbarDark {
+  background-color: rgb(36, 36, 36);
+  width: 90px;
+  position: fixed;
+  height: 100vh;
+  display: flex;
+}
+.navbarLight {
+  background-color: #f4f4f4;
+  width: 90px;
+  position: fixed;
+  height: 100vh;
+  display: flex;
+}
+.navbarDark button {
+  color: #f4f4f4;
+}
+.navbarLight button {
+  color: rgb(36, 36, 36);
+}
+.logo {
+  margin-top: 30px;
+}
+.navbarDark .logo {
+  fill: #f4f4f4;
+}
+.navbarLight .logo {
+  fill: rgb(36, 36, 36);
+}
+.navWrapper {
+  width: 100%;
+  margin: auto 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.buttonWrapper {
+  width: 100%;
+}
+.navButtons {
+  height: 80px;
+  width: 100%;
+  border: none;
+  transition-duration: 300ms;
+  cursor: pointer;
+  background-color: inherit;
+}
+.navButtons svg {
+  font-size: 24px;
+}
+.selected {
+  background-color: var(--accent);
+}
+.show {
+  transform: translateX(0px);
+}
+.hide {
+  transform: translateX(-80px);
+}
+@media screen and (max-width: 768px) {
+  .navbarLight {
+    z-index: 1;
+    transition-duration: 300ms;
+  }
+  .navbarDark {
+    z-index: 1;
+    transition-duration: 300ms;
+  }
+}
