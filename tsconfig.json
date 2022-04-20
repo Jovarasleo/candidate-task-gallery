@@ -20,7 +20,8 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/api/getPhotos.jsx",
-    "public/index.jsx"
+    "public/index.jsx",
+    "pages/_app.jsx"
   ],
   "exclude": ["node_modules"]
 }

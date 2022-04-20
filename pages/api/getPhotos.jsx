@@ -33,9 +33,6 @@ const getImages = async (req, res) => {
     }
     console.log(landscapeResult.errors);
   } catch (error) {
-    // console.log(error);
-    // logger.error("Http error", error);
-    // throw new Error.status(400);
     return res.status(400).json({ success: false, error: error });
   }
 };
