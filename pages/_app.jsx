@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import { FavouritesProvider } from "../context/FavouritesContext";
-import { ThemeProvider } from "../context/themeContext";
-import { DataProvider } from "../context/dataContext";
+import { ThemeProvider } from "../context/ThemeContext";
+import { DataProvider } from "../context/DataContext";
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider>

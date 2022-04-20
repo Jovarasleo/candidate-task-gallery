@@ -1,11 +1,10 @@
-import { useEffect, useState, useContext } from "react";
+import { useContext } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { MdOutlineImage } from "react-icons/md";
 import { BsSunFill, BsMoonFill } from "react-icons/bs";
 import { FiMail } from "react-icons/fi";
 import { default as Logo } from "../../Logo.svg";
-import useMediaQuery from "../../util/useMediaQuery";
-import ThemeContext from "../../../context/themeContext";
+import ThemeContext from "../../../context/ThemeContext";
 import styles from "./styles.module.css";
 
 function Navbar({

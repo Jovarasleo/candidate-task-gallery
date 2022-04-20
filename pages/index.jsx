@@ -2,17 +2,16 @@ import React, { Suspense } from "react";
 import styles from "../styles/Home.module.css";
 import ImageCard from "./components/imageCard/index";
 import { useState, useEffect, useCallback, useContext, useRef } from "react";
-
-// import OpenImage from "./components/openImage";
 import useMediaQuery from "./util/useMediaQuery";
 import FavouritesContext from "../context/FavouritesContext";
 import Navbar from "./components/navbar";
 import useIsMobile from "./util/useIsMobile";
-import ThemeContext from "../context/themeContext";
-import DataContext from "../context/dataContext";
+import ThemeContext from "../context/ThemeContext";
+import DataContext from "../context/DataContext";
 import { useSwipeable } from "react-swipeable";
 import Head from "next/head";
 const OpenImage = React.lazy(() => import("./components/openImage"));
+
 const Home = () => {
   <Head>
     <title>My page title</title>
