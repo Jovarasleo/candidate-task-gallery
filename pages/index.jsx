@@ -1,7 +1,10 @@
+import React, { Suspense } from "react";
 import styles from "../styles/Home.module.css";
 import ImageCard from "./components/imageCard/index";
 import { useState, useEffect, useCallback, useContext, useRef } from "react";
-import OpenImage from "./components/openImage";
+
+// import OpenImage from "./components/openImage";
+import useMediaQuery from "./util/useMediaQuery";
 import FavouritesContext from "../context/FavouritesContext";
 import Navbar from "./components/navbar";
 import useIsMobile from "./util/useIsMobile";
@@ -9,6 +12,7 @@ import ThemeContext from "../context/themeContext";
 import DataContext from "../context/dataContext";
 import { useSwipeable } from "react-swipeable";
 import Head from "next/head";
+const OpenImage = React.lazy(() => import("./components/openImage"));
 const Home = () => {
   <Head>
     <title>My page title</title>
@@ -36,6 +40,8 @@ const Home = () => {
   const wait = useRef(false);
   const isMobile = useIsMobile();
 
+  const isBreakpoint = useMediaQuery(768);
+
   useEffect(() => {
     const data = /*@cc_on!@*/ false || !!document.documentMode;
     isIE.current = data;
@@ -59,6 +65,11 @@ const Home = () => {
     setShowImage(!showImage);
     setImage(id);
   };
+  useEffect(() => {
+    if (isBreakpoint) {
+      setShowNavbar(false);
+    } else setShowNavbar(true);
+  }, [isBreakpoint, setShowNavbar]);
 
   const getPhotos = useCallback(async () => {
     try {
@@ -133,7 +144,7 @@ const Home = () => {
     <div
       id="app"
       className={theme === "light" ? styles.applight : styles.appdark}
-      {...handlers}
+      {...(isBreakpoint ? handlers : {})}
       style={{ touchAction: "pan-y" }}
     >
       <div
@@ -146,7 +157,6 @@ const Home = () => {
           showFavourites={showFavourites}
           setShowFavourites={setShowFavourites}
           showNavbar={showNavbar}
-          setShowNavbar={setShowNavbar}
           image={image}
         />
         <main className={styles.main}>
@@ -225,15 +235,16 @@ const Home = () => {
                 })}
           </div>
         </main>
-        {showImage ? (
-          <OpenImage
-            image={image}
-            onClick={() => openImage()}
-            portraitImages={portraitImages}
-            landscapeImages={landscapeImages}
-          />
-        ) : null}
-        <footer className={styles.footer}></footer>
+        <Suspense fallback={<div>Loading...</div>}>
+          {showImage ? (
+            <OpenImage
+              image={image}
+              onClick={() => openImage()}
+              portraitImages={portraitImages}
+              landscapeImages={landscapeImages}
+            />
+          ) : null}
+        </Suspense>
       </div>
     </div>
   );

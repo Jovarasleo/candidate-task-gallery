@@ -62,19 +62,19 @@ function OpenImage({ image, onClick }) {
             </div>
             <div className={styles.infoStatistics}>
               <p>
-                {image?.likes} <FaHeart />
+                <FaHeart /> {image?.likes}
               </p>
               <p>
-                {image?.downloads}
                 <button
                   onClick={() => downloadImage(image?.urls.full)}
                   className={styles.downloadButton}
                 >
                   <MdDownload />
                 </button>
+                {image?.downloads}
               </p>
               <p>
-                {image?.views.toLocaleString()} <IoEye />
+                <IoEye /> {image?.views.toLocaleString()}
               </p>
             </div>
             <div className={styles.infoCamera}>

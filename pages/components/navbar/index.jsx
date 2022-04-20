@@ -16,13 +16,7 @@ function Navbar({
   image,
 }) {
   const { theme, toggleTheme } = useContext(ThemeContext);
-  const isBreakpoint = useMediaQuery(768);
 
-  useEffect(() => {
-    if (isBreakpoint) {
-      setShowNavbar(false);
-    } else setShowNavbar(true);
-  }, [isBreakpoint, setShowNavbar]);
   return (
     <nav
       className={
