@@ -3,7 +3,6 @@ import { createContext, useState, useEffect } from "react";
 const FAVOURITES_KEY = "FAVOURITE_PHOTOS";
 
 const FavouritesContext = createContext();
-
 function FavouritesProvider({ children }) {
   const [favourites, setFavourites] = useState([]);
   useEffect(() => {

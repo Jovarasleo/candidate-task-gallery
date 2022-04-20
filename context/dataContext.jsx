@@ -6,7 +6,6 @@ const DEFAULT = {
 };
 
 const DataContext = createContext();
-
 function DataProvider({ children }) {
   const [portraitImages, setPortraitImages] = useState(DEFAULT.data);
   const [landscapeImages, setLandscapeImages] = useState(DEFAULT.data);

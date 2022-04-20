@@ -2,7 +2,6 @@ import { createContext, useState, useEffect } from "react";
 const THEME_KEY = "THEME_KEY";
 
 const ThemeContext = createContext();
-
 function ThemeProvider({ children }) {
   const [theme, setTheme] = useState();
   useEffect(() => {
