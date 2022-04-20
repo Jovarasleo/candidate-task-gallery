@@ -13,7 +13,6 @@
 .closeButton {
   background-color: transparent;
   border: none;
-  display: flex;
   position: absolute;
   right: 20px;
   top: 20px;
@@ -42,6 +41,7 @@
   position: relative;
   height: 714px;
   max-width: 1200px;
+  width: 100%;
   object-fit: contain;
   display: flex;
 }
@@ -65,6 +65,11 @@
   background-color: black;
   padding: 67px 64px 45px 58px;
 }
+.infoWrapper__inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 .infoAuthor {
   display: flex;
 }
@@ -75,8 +80,32 @@
 .infoAuthor__inner p {
   margin: 0;
 }
+.infoDescription {
+}
 .infoStatistics {
   display: flex;
+  margin-top: auto;
+  bottom: 0;
+  border-bottom: 1px solid white;
+}
+.infoStatistics::after {
+  content: "";
+  border-bottom: 1px solid white;
+}
+.infoStatistics p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.infoStatistics svg {
+  font-size: 20px;
+  margin-left: 10px;
+}
+.downloadButton {
+  background-color: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 .infoStatistics p {
   margin-right: 30px;
@@ -140,24 +169,27 @@
 @media screen and (max-width: 768px) {
   .bigImageWrapper {
     flex-direction: column;
-    max-height: 100vh;
-    height: auto;
+    height: 100%;
     width: 100%;
+    flex: 1;
   }
   .imageWrapper {
     width: 100%;
-    height: 50vh;
     margin: 0 auto;
+    max-height: 70%;
   }
   .infoWrapper {
-    padding: 10px;
     width: 100%;
-    height: 50%;
-    display: flex;
-    flex-direction: column;
+    min-height: 30%;
+    overflow-x: scroll;
+    padding: 10px;
+    flex: 1;
   }
-  .infoCamera div {
-    display: flex;
-    flex-direction: column;
+
+  .closeButton:before,
+  .closeButton:after {
+    background-color: var(--accent);
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
   }
 }

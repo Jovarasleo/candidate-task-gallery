@@ -2,15 +2,17 @@
   background-color: rgb(36, 36, 36);
   width: 90px;
   position: fixed;
-  height: 100vh;
   display: flex;
+  transition-duration: 300ms;
+  height: 100vh;
 }
 .navbarLight {
   background-color: #f4f4f4;
   width: 90px;
   position: fixed;
-  height: 100vh;
   display: flex;
+  transition-duration: 300ms;
+  height: 100vh;
 }
 .navbarDark button {
   color: #f4f4f4;
@@ -47,11 +49,15 @@
   cursor: pointer;
   background-color: inherit;
 }
+.bottomButtons {
+  margin-bottom: 40px;
+}
 .navButtons svg {
   font-size: 24px;
 }
 .selected {
   background-color: var(--accent);
+  color: white;
 }
 .show {
   transform: translateX(0px);
@@ -60,12 +66,4 @@
   transform: translateX(-80px);
 }
 @media screen and (max-width: 768px) {
-  .navbarLight {
-    z-index: 1;
-    transition-duration: 300ms;
-  }
-  .navbarDark {
-    z-index: 1;
-    transition-duration: 300ms;
-  }
 }

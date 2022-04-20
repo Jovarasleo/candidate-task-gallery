@@ -1,9 +1,8 @@
 import styles from "./index.module.css";
-import Image from "next/image";
-import { useState, useContext, useEffect } from "react";
+import { useContext } from "react";
 import FavouritesContext from "../../../context/FavouritesContext";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-function ImageCard({ img, style, className, onClick, image }) {
+function ImageCard({ style, className, onClick, image }) {
   const orientationClass =
     image?.height >= image?.width ? styles.portrait : styles.landscape;
   const newClass = styles.imageWrapper.concat(" ", orientationClass);

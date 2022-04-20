@@ -13,27 +13,16 @@ function Navbar({
   setShowFavourites,
   showNavbar,
   setShowNavbar,
+  image,
 }) {
-  const handleFavouritesOn = () => {
-    setShowFavourites(true);
-  };
-  const handleFavouritesOff = () => {
-    setShowFavourites(false);
-  };
-  const handleClick = (e) => {
-    e.stopPropagation();
-    if (!isBreakpoint) return;
-    setShowNavbar(!showNavbar);
-  };
   const { theme, toggleTheme } = useContext(ThemeContext);
   const isBreakpoint = useMediaQuery(768);
 
   useEffect(() => {
-    console.log(isBreakpoint);
     if (isBreakpoint) {
       setShowNavbar(false);
     } else setShowNavbar(true);
-  }, [isBreakpoint]);
+  }, [isBreakpoint, setShowNavbar]);
   return (
     <nav
       className={
@@ -47,13 +36,13 @@ function Navbar({
               showNavbar ? styles.show : styles.hide
             )
       }
-      // onClick={(e) => handleClick(e)}
+      style={!image ? { zIndex: 1 } : null}
     >
       <div className={styles.navWrapper}>
         <Logo className={styles.logo} />
         <div className={styles.buttonWrapper}>
           <button
-            onClick={handleFavouritesOn}
+            onClick={() => setShowFavourites(true)}
             className={styles.navButtons.concat(
               " ",
               showFavourites ? styles.selected : null
@@ -62,7 +51,7 @@ function Navbar({
             <FaRegHeart />
           </button>
           <button
-            onClick={handleFavouritesOff}
+            onClick={() => setShowFavourites(false)}
             className={styles.navButtons.concat(
               " ",
               !showFavourites ? styles.selected : null
@@ -76,7 +65,7 @@ function Navbar({
             <FiMail />
           </button>
           <button
-            className={styles.navButtons}
+            className={styles.navButtons.concat(" ", styles.bottomButtons)}
             onClick={() => toggleTheme(theme)}
           >
             {theme === "light" ? <BsMoonFill /> : <BsSunFill />}

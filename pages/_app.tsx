@@ -1,14 +1,15 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import Home from "./index";
 import { FavouritesProvider } from "../context/FavouritesContext";
 import { ThemeProvider } from "../context/themeContext";
+import { DataProvider } from "../context/dataContext";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider>
       <FavouritesProvider>
-        {/* <Home /> */}
-        <Component {...pageProps} />
+        <DataProvider>
+          <Component {...pageProps} />
+        </DataProvider>
       </FavouritesProvider>
     </ThemeProvider>
   );

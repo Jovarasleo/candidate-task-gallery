@@ -1,55 +1,40 @@
 import styles from "../styles/Home.module.css";
 import ImageCard from "./components/imageCard/index";
 import { useState, useEffect, useCallback, useContext, useRef } from "react";
-import BigImage from "./components/bigImage";
+import OpenImage from "./components/openImage";
 import FavouritesContext from "../context/FavouritesContext";
 import Navbar from "./components/navbar";
-import useScreenOrientation from "./util/useScreenOrientation";
+import useIsMobile from "./util/useIsMobile";
 import ThemeContext from "../context/themeContext";
+import DataContext from "../context/dataContext";
 import { useSwipeable } from "react-swipeable";
-var wait = false;
-
+import Head from "next/head";
 const Home = () => {
-  const handlers = useSwipeable({
-    onSwipedLeft: () => setShowNavbar(false),
-    onSwipedRight: () => setShowNavbar(true),
-    preventDefaultTouchmoveEvent: true,
-    trackMouse: true,
-  });
+  <Head>
+    <title>My page title</title>
+    <meta name="mobile-web-app-capable" content="yes" />
+  </Head>;
   const { theme } = useContext(ThemeContext);
+  const {
+    portraitImages,
+    setPortraitImages,
+    landscapeImages,
+    setLandscapeImages,
+    error,
+    setError,
+  } = useContext(DataContext);
+  const { favourites } = useContext(FavouritesContext);
+
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [isLoading, setLoading] = useState(true);
+  const [showFavourites, setShowFavourites] = useState(false);
+  const [showImage, setShowImage] = useState(false);
+  const [image, setImage] = useState("");
   const isIE = useRef(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const orientation = useScreenOrientation("portrait");
-  const reqFullscreen = () => {
-    let app = document.querySelector("#app");
-    return (
-      app.requestFullscreen() ||
-      app.webkitRequestFullScreen() ||
-      app.mozRequestFullScreen()
-    );
-  };
-  const toggleFullscreen = () => {
-    const isMobile =
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      );
-    if (isMobile) {
-      var myScreenOrientation = window.screen.orientation;
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-        setIsFullscreen(false);
-        if (!!window.chrome) {
-          myScreenOrientation.unlock();
-        }
-      } else {
-        reqFullscreen();
-        setIsFullscreen(true);
-        if (!!window.chrome) {
-          myScreenOrientation.lock("portrait");
-        }
-      }
-    } else return;
-  };
+
+  const observer = useRef();
+  const wait = useRef(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const data = /*@cc_on!@*/ false || !!document.documentMode;
@@ -63,29 +48,19 @@ const Home = () => {
     }
   }, []);
 
-  const [portraitImages, setPortraitImages] = useState([]);
-  const [landscapeImages, setLandscapeImages] = useState([]);
-
-  const { favourites } = useContext(FavouritesContext);
-  const [showNavbar, setShowNavbar] = useState(true);
-  const [isLoading, setLoading] = useState(true);
-  const [showFavourites, setShowFavourites] = useState(false);
-  const [error, setError] = useState(false);
-
-  const [firstLoad, setFirstLoad] = useState(true);
-  const [showImage, setShowImage] = useState(false);
-  const [image, setImage] = useState("");
-  const observer = useRef();
+  const handlers = useSwipeable({
+    onSwipedLeft: () => setShowNavbar(false),
+    onSwipedRight: () => setShowNavbar(true),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+  });
 
   const openImage = (id) => {
     setShowImage(!showImage);
     setImage(id);
-    console.log(id);
-    toggleFullscreen();
   };
 
   const getPhotos = useCallback(async () => {
-    setLoading(false);
     try {
       const response = await fetch("api/getPhotos");
       const data = await response.json();
@@ -97,62 +72,63 @@ const Home = () => {
       }
     } catch (error) {
       setError(error);
-    } finally {
-      setLoading(false);
-      setFirstLoad(false);
     }
-  }, [landscapeImages, portraitImages]);
+  }, [
+    landscapeImages,
+    portraitImages,
+    setPortraitImages,
+    setLandscapeImages,
+    setError,
+  ]);
 
-  useEffect(() => {
-    if (isLoading) {
-      getPhotos();
-    }
-    console.log("useEffect isLoading called");
-    if (showImage) {
-      document.body.style.overflow = "hidden";
-    } else document.body.style.overflow = "";
-  }, [showImage, getPhotos, isLoading]);
-
-  const handleScroll = useCallback(
-    (e) => {
-      if (
-        window.innerHeight + e?.target?.documentElement.scrollTop >=
-          e?.target?.documentElement.scrollHeight &&
-        !wait
-      ) {
-        wait = true;
-        if (wait) {
-          getPhotos();
-        }
-        setTimeout(function () {
-          wait = false;
-        }, 1000);
+  const handleScroll = useCallback(() => {
+    if (
+      document.body.scrollTop + window.innerHeight >=
+        document.body.scrollHeight &&
+      !wait.current
+    ) {
+      wait.current = true;
+      if (wait.current) {
+        setLoading(true);
       }
-    },
-    [getPhotos]
-  );
+      setTimeout(function () {
+        wait.current = false;
+      }, 1000);
+    }
+  }, []);
 
   const lastItemRef = useCallback(
     (node) => {
       if (!isIE.current) {
-        if (isLoading) return;
         if (observer.current) observer.current.disconnect();
         observer.current = new IntersectionObserver((entries) => {
           if (entries[0].isIntersecting) {
-            console.log("visible");
-            getPhotos();
+            setLoading(true);
           }
         });
         if (node) observer.current.observe(node);
       }
       if (isIE.current) {
-        if (isLoading) return;
+        console.log("IE found");
         window.addEventListener("scroll", handleScroll, true);
         return () => window.addEventListener("scroll", handleScroll, true);
       }
     },
-    [isLoading, getPhotos, handleScroll]
+    [handleScroll]
   );
+
+  useEffect(() => {
+    if (isLoading) {
+      setLoading(false);
+      getPhotos();
+    }
+    if (showImage) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [showImage, getPhotos, isLoading]);
+
   return (
     <div
       id="app"
@@ -166,14 +142,13 @@ const Home = () => {
           theme === "light" ? styles.containerLight : styles.containerDark
         )}
       >
-        {isFullscreen ? null : (
-          <Navbar
-            showFavourites={showFavourites}
-            setShowFavourites={setShowFavourites}
-            showNavbar={showNavbar}
-            setShowNavbar={setShowNavbar}
-          />
-        )}
+        <Navbar
+          showFavourites={showFavourites}
+          setShowFavourites={setShowFavourites}
+          showNavbar={showNavbar}
+          setShowNavbar={setShowNavbar}
+          image={image}
+        />
         <main className={styles.main}>
           <div className={styles.gallery}>
             {showFavourites
@@ -192,122 +167,66 @@ const Home = () => {
                   );
                 })
               : landscapeImages?.map((image, index) => {
-                  if (portraitImages.length === index + 1) {
-                    if (index % 2 == 0) {
-                      return (
-                        <div
-                          className={styles.cardsWrapper}
-                          key={image.id + portraitImages[index]?.id + index}
-                          ref={lastItemRef}
-                        >
-                          <ImageCard
-                            image={portraitImages[index]}
-                            key={portraitImages[index]?.id}
-                            img={portraitImages[index]?.urls?.thumb}
-                            className={styles.seperator}
-                            onClick={() => openImage(portraitImages[index])}
-                            showImage={showImage}
-                            setShowImage={setShowImage}
-                          />
-                          <ImageCard
-                            image={image}
-                            key={image?.id}
-                            img={image?.urls?.thumb}
-                            onClick={() => openImage(image)}
-                            showImage={showImage}
-                            setShowImage={setShowImage}
-                          />
-                        </div>
-                      );
-                    }
-                    if (index % 2 == 1) {
-                      return (
-                        <div
-                          className={styles.cardsWrapper}
-                          key={image.id + portraitImages[index]?.id + index}
-                          ref={lastItemRef}
-                        >
-                          <ImageCard
-                            image={image}
-                            key={image?.id}
-                            img={image?.urls?.thumb}
-                            className={styles.seperator}
-                            onClick={() => openImage(image)}
-                            showImage={showImage}
-                            setShowImage={setShowImage}
-                          />
-                          <ImageCard
-                            image={portraitImages[index]}
-                            key={portraitImages[index]?.id}
-                            img={portraitImages[index]?.urls?.thumb}
-                            onClick={() => openImage(portraitImages[index])}
-                            showImage={showImage}
-                            setShowImage={setShowImage}
-                          />
-                        </div>
-                      );
-                    }
-                  } else {
-                    if (index % 2 == 0) {
-                      return (
-                        <div
-                          className={styles.cardsWrapper}
-                          key={image.id + portraitImages[index]?.id + index}
-                          id={image.id + portraitImages[index]?.id + index}
-                        >
-                          <ImageCard
-                            image={portraitImages[index]}
-                            key={portraitImages[index]?.id}
-                            img={portraitImages[index]?.urls?.thumb}
-                            className={styles.seperator}
-                            onClick={() => openImage(portraitImages[index])}
-                            showImage={showImage}
-                            setShowImage={setShowImage}
-                          />
-                          <ImageCard
-                            image={image}
-                            key={image?.id}
-                            img={image?.urls?.thumb}
-                            onClick={() => openImage(image)}
-                            showImage={showImage}
-                            setShowImage={setShowImage}
-                          />
-                        </div>
-                      );
-                    }
-                    if (index % 2 == 1) {
-                      return (
-                        <div
-                          className={styles.cardsWrapper}
-                          key={image.id + portraitImages[index]?.id + index}
-                          id={image.id + portraitImages[index]?.id + index}
-                        >
-                          <ImageCard
-                            image={image}
-                            key={image?.id}
-                            img={image?.urls?.thumb}
-                            className={styles.seperator}
-                            onClick={() => openImage(image)}
-                            showImage={showImage}
-                            setShowImage={setShowImage}
-                          />
-                          <ImageCard
-                            image={portraitImages[index]}
-                            key={portraitImages[index]?.id}
-                            img={portraitImages[index]?.urls?.thumb}
-                            onClick={() => openImage(portraitImages[index])}
-                            showImage={showImage}
-                            setShowImage={setShowImage}
-                          />
-                        </div>
-                      );
-                    }
+                  const isLastElement = portraitImages.length === index + 1;
+                  if (index % 2 == 0) {
+                    return (
+                      <div
+                        className={styles.cardsWrapper}
+                        key={image.id + portraitImages[index]?.id + index}
+                        ref={isLastElement ? lastItemRef : null}
+                      >
+                        <ImageCard
+                          image={portraitImages[index]}
+                          key={portraitImages[index]?.id}
+                          img={portraitImages[index]?.urls?.thumb}
+                          className={styles.seperator}
+                          onClick={() => openImage(portraitImages[index])}
+                          showImage={showImage}
+                          setShowImage={setShowImage}
+                        />
+                        <ImageCard
+                          image={image}
+                          key={image?.id}
+                          img={image?.urls?.thumb}
+                          onClick={() => openImage(image)}
+                          showImage={showImage}
+                          setShowImage={setShowImage}
+                        />
+                      </div>
+                    );
+                  }
+                  if (index % 2 == 1) {
+                    return (
+                      <div
+                        className={styles.cardsWrapper}
+                        key={image.id + portraitImages[index]?.id + index}
+                        ref={isLastElement ? lastItemRef : null}
+                      >
+                        <ImageCard
+                          image={image}
+                          key={image?.id}
+                          img={image?.urls?.thumb}
+                          className={styles.seperator}
+                          onClick={() => openImage(image)}
+                          showImage={showImage}
+                          setShowImage={setShowImage}
+                        />
+                        <ImageCard
+                          image={portraitImages[index]}
+                          key={portraitImages[index]?.id}
+                          img={portraitImages[index]?.urls?.thumb}
+                          onClick={() => openImage(portraitImages[index])}
+                          showImage={showImage}
+                          setShowImage={setShowImage}
+                        />
+                      </div>
+                    );
                   }
                 })}
           </div>
         </main>
         {showImage ? (
-          <BigImage
+          <OpenImage
             image={image}
             onClick={() => openImage()}
             portraitImages={portraitImages}

@@ -1,17 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap");
 :root {
   --themePrimary: rgb(21, 21, 21);
   --themeSecondary: rgb(36, 36, 36);
+  --lightThemePrimary: rgb(255, 255, 255);
+  --lightThemeSecondary: rgb(244, 244, 244);
   --dropdown: rgba(21, 21, 21, 0.8);
   --secondaryDropdown: rgba(15, 15, 15, 0.847);
   --accent: rgb(17, 141, 186);
   --speed: 500ms;
 }
-html,
+html {
+  overflow: hidden;
+  width: 100%;
+  height: 100vh;
+}
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: "Sen", sans-serif, -apple-system, BlinkMacSystemFont, Segoe UI,
+    Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+    sans-serif;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+main {
+  width: 100%;
 }
 #logo a {
   color: inherit;

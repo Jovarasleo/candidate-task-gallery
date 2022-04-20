@@ -1,14 +1,14 @@
 import styles from "./index.module.css";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import FavouritesContext from "../../../context/FavouritesContext";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { MdDownload } from "react-icons/md";
 import { IoEye } from "react-icons/io5";
-import Link from "next/link";
-function BigImage({ image, onClick }) {
+
+function OpenImage({ image, onClick }) {
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
   const isFavourite = favourites.some((item) => item.id === image?.id);
-
+  const [viewHeight, setViewHeight] = useState();
   const downloadImage = async (data) => {
     const image = await fetch(data);
     const imageBlog = await image.blob();
@@ -25,6 +25,9 @@ function BigImage({ image, onClick }) {
   function goToImage(id) {
     document.location.href = id;
   }
+  useEffect(() => {
+    setViewHeight(window.innerHeight);
+  }, [viewHeight]);
   return (
     <div className={styles.imageBackdrop} onClick={onClick}>
       <div
@@ -39,7 +42,7 @@ function BigImage({ image, onClick }) {
         </div>
         <div className={styles.infoWrapper}>
           <button className={styles.closeButton} onClick={onClick}></button>
-          <div className={styles.info}>
+          <div className={styles.infoWrapper__inner}>
             <div className={styles.infoAuthor}>
               <div className={styles.infoAuthor__inner}>
                 <p className={styles.sectionName}>author</p>
@@ -63,12 +66,15 @@ function BigImage({ image, onClick }) {
               </p>
               <p>
                 {image?.downloads}
-                <button onClick={() => downloadImage(image?.urls.full)}>
+                <button
+                  onClick={() => downloadImage(image?.urls.full)}
+                  className={styles.downloadButton}
+                >
                   <MdDownload />
                 </button>
               </p>
               <p>
-                {image?.views} <IoEye />
+                {image?.views.toLocaleString()} <IoEye />
               </p>
             </div>
             <div className={styles.infoCamera}>
@@ -102,4 +108,4 @@ function BigImage({ image, onClick }) {
     </div>
   );
 }
-export default BigImage;
+export default OpenImage;
