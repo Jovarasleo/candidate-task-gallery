@@ -15,7 +15,7 @@ function ImageCard({ style, className, onClick, image }) {
     e.stopPropagation();
   };
   const isFavourite = favourites.some((item) => item.id === image?.id);
-  const url = image?.urls?.thumb;
+  const url = image?.urls?.small;
   return (
     <>
       <div

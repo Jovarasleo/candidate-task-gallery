@@ -70,13 +70,14 @@ const Home = () => {
 
   const getPhotos = useCallback(async () => {
     try {
-      const response = await fetch("api/getPhotos");
+      const response = await fetch("api/getImages");
       const data = await response.json();
       if (data.success) {
         setLandscapeImages([...landscapeImages, ...data.images.landscape]);
         setPortraitImages([...portraitImages, ...data.images.portrait]);
+        setError(false);
       } else {
-        setError(true);
+        setError(data.error);
       }
     } catch (error) {
       setError(error);
@@ -136,7 +137,6 @@ const Home = () => {
       document.body.style.overflow = "";
     }
   }, [showImage, getPhotos, isLoading]);
-
   return (
     <div
       id="app"
@@ -145,8 +145,7 @@ const Home = () => {
       style={{ touchAction: "pan-y" }}
     >
       <Head>
-        <title>My page title</title>
-        <meta name="mobile-web-app-capable" content="yes" />
+        <title>Gallery</title>
       </Head>
       <div
         className={styles.container.concat(
@@ -236,6 +235,7 @@ const Home = () => {
                     );
                   }
                 })}
+            {error ? <h3 className={styles.errorMsg}>{error}</h3> : null}
           </div>
         </main>
         <Suspense fallback={<div>Loading...</div>}>

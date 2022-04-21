@@ -34,6 +34,13 @@
   max-width: 270px;
   width: 100%;
 }
+.errorMsg {
+  text-align: center;
+  color: #ffffff;
+  font-size: 26px;
+  margin: auto;
+  margin-top: 40px;
+}
 @media screen and (max-width: 768px) {
   .gallery {
     margin: 20px;
