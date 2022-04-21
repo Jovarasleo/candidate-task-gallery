@@ -1,12 +1,13 @@
 import styles from "./index.module.css";
 import { useContext } from "react";
 import FavouritesContext from "../../../context/FavouritesContext";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
+
 function ImageCard({ style, className, onClick, image }) {
   const orientationClass =
     image?.height >= image?.width ? styles.portrait : styles.landscape;
   const newClass = styles.imageWrapper.concat(" ", orientationClass);
-  const url = image?.urls?.thumb;
+
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
   const handleClick = (e) => {
     console.log(image);
@@ -14,6 +15,7 @@ function ImageCard({ style, className, onClick, image }) {
     e.stopPropagation();
   };
   const isFavourite = favourites.some((item) => item.id === image?.id);
+  const url = image?.urls?.thumb;
   return (
     <>
       <div
@@ -29,7 +31,7 @@ function ImageCard({ style, className, onClick, image }) {
             <FaHeart />
           </button>
         ) : null}
-        <img src={url} alt="" layout="fill" />
+        <img src={url} alt={image?.id} />
       </div>
     </>
   );

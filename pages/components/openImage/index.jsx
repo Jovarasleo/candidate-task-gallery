@@ -4,7 +4,7 @@ import FavouritesContext from "../../../context/FavouritesContext";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { MdDownload } from "react-icons/md";
 import { IoEye } from "react-icons/io5";
-
+import Button from "../button";
 function OpenImage({ image, onClick }) {
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
   const isFavourite = favourites.some((item) => item.id === image?.id);
@@ -28,6 +28,7 @@ function OpenImage({ image, onClick }) {
   useEffect(() => {
     setViewHeight(window.innerHeight);
   }, [viewHeight]);
+  const url = image?.urls?.regular;
   return (
     <div className={styles.imageBackdrop} onClick={onClick}>
       <div
@@ -38,10 +39,10 @@ function OpenImage({ image, onClick }) {
           className={styles.imageWrapper}
           onDoubleClick={() => goToImage(image?.urls?.full)}
         >
-          <img src={image?.urls?.regular} alt="" />
+          <img src={url} alt="" />
         </div>
         <div className={styles.infoWrapper}>
-          <button className={styles.closeButton} onClick={onClick}></button>
+          <Button onClick={onClick} closeButton></Button>
           <div className={styles.infoWrapper__inner}>
             <div className={styles.infoAuthor}>
               <div className={styles.infoAuthor__inner}>
@@ -56,10 +57,13 @@ function OpenImage({ image, onClick }) {
                 {isFavourite ? <FaHeart /> : <FaRegHeart />}
               </button>
             </div>
-            <div className={styles.infoDescription}>
-              <p className={styles.sectionName}>Description</p>
-              <p>{image?.description}</p>
-            </div>
+            {image?.description ? (
+              <div className={styles.infoDescription}>
+                <p className={styles.sectionName}>Description</p>
+                <p>{image?.description}</p>
+              </div>
+            ) : null}
+
             <div className={styles.infoStatistics}>
               <p>
                 <FaHeart /> {image?.likes}

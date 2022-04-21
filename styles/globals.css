@@ -1,9 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap");
 :root {
-  --themePrimary: rgb(21, 21, 21);
+  --themePrimary: #151515;
   --themeSecondary: rgb(36, 36, 36);
   --lightThemePrimary: rgb(255, 255, 255);
   --lightThemeSecondary: rgb(244, 244, 244);
+  --dark: rgb(20, 20, 20);
+  --input: rgb(112, 112, 112);
   --dropdown: rgba(21, 21, 21, 0.8);
   --secondaryDropdown: rgba(15, 15, 15, 0.847);
   --accent: rgb(17, 141, 186);
@@ -34,6 +36,7 @@ main {
   text-decoration: none;
 }
 p {
+  margin: 0;
   color: white;
 }
 * {

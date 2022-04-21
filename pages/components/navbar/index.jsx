@@ -11,8 +11,9 @@ function Navbar({
   showFavourites,
   setShowFavourites,
   showNavbar,
-  setShowNavbar,
   image,
+  setShowModal,
+  showModal,
 }) {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
@@ -54,7 +55,10 @@ function Navbar({
           </button>
         </div>
         <div className={styles.buttonWrapper}>
-          <button className={styles.navButtons}>
+          <button
+            className={styles.navButtons}
+            onClick={() => setShowModal(!showModal)}
+          >
             <FiMail />
           </button>
           <button

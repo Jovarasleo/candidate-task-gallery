@@ -5,6 +5,7 @@ import { useState, useEffect, useCallback, useContext, useRef } from "react";
 import useMediaQuery from "./util/useMediaQuery";
 import FavouritesContext from "../context/FavouritesContext";
 import Navbar from "./components/navbar";
+import NewsLetterModal from "./components/newsLetterModal";
 import useIsMobile from "./util/useIsMobile";
 import ThemeContext from "../context/ThemeContext";
 import DataContext from "../context/DataContext";
@@ -13,10 +14,6 @@ import Head from "next/head";
 const OpenImage = React.lazy(() => import("./components/openImage"));
 
 const Home = () => {
-  <Head>
-    <title>My page title</title>
-    <meta name="mobile-web-app-capable" content="yes" />
-  </Head>;
   const { theme } = useContext(ThemeContext);
   const {
     portraitImages,
@@ -32,6 +29,7 @@ const Home = () => {
   const [isLoading, setLoading] = useState(true);
   const [showFavourites, setShowFavourites] = useState(false);
   const [showImage, setShowImage] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [image, setImage] = useState("");
   const isIE = useRef(false);
 
@@ -146,6 +144,10 @@ const Home = () => {
       {...(isBreakpoint ? handlers : {})}
       style={{ touchAction: "pan-y" }}
     >
+      <Head>
+        <title>My page title</title>
+        <meta name="mobile-web-app-capable" content="yes" />
+      </Head>
       <div
         className={styles.container.concat(
           " ",
@@ -155,6 +157,8 @@ const Home = () => {
         <Navbar
           showFavourites={showFavourites}
           setShowFavourites={setShowFavourites}
+          setShowModal={setShowModal}
+          showModal={showModal}
           showNavbar={showNavbar}
           image={image}
         />
@@ -244,6 +248,9 @@ const Home = () => {
             />
           ) : null}
         </Suspense>
+        {showModal ? (
+          <NewsLetterModal onClick={() => setShowModal(!showModal)} />
+        ) : null}
       </div>
     </div>
   );

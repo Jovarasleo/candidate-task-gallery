@@ -1,7 +1,6 @@
 .container {
   margin: 0 auto;
   max-width: 1600px;
-
   min-height: 100vh;
   flex: 1;
   display: flex;
@@ -11,6 +10,12 @@
   background-color: rgb(24, 24, 24);
 }
 .containerLight {
+  background-color: #ffffff;
+}
+.appdark {
+  background-color: rgb(24, 24, 24);
+}
+.applight {
   background-color: #ffffff;
 }
 .gallery {
@@ -24,29 +29,21 @@
 .seperator {
   margin-bottom: 25px;
 }
-@media screen and (-ms-high-contrast: active),
-  screen and (-ms-high-contrast: none) {
-  .cardsWrapper {
-    margin-right: 25px;
-    margin-bottom: 25px;
-  }
-}
 .cardsWrapper {
   max-height: 550px;
   max-width: 270px;
   width: 100%;
 }
-.applight {
-  background-color: #ffffff;
-}
-.appdark {
-  background-color: rgb(24, 24, 24);
-}
-@media screen and (max-width: 310px) {
-}
 @media screen and (max-width: 768px) {
   .gallery {
     margin: 20px;
     justify-content: center;
+  }
+}
+@media screen and (-ms-high-contrast: active),
+  screen and (-ms-high-contrast: none) {
+  .cardsWrapper {
+    margin-right: 25px;
+    margin-bottom: 25px;
   }
 }
