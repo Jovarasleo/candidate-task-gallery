@@ -18,6 +18,16 @@
   position: absolute;
   right: 0;
 }
+
+@media screen and (max-width: 416px) {
+  .landscape {
+    height: 210px;
+  }
+  .portrait {
+    height: 400px;
+  }
+}
+
 @media screen and (-ms-high-contrast: active),
   screen and (-ms-high-contrast: none) {
   .imageWrapper img {
