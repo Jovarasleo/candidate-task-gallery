@@ -53,7 +53,7 @@ function Navbar({
             <MdOutlineImage />
           </Button>
         </div>
-        <div className={styles.buttonWrapper}>
+        <div className={styles.buttonWrapper.concat(" ", styles.bottomButtons)}>
           <Button
             className={theme === "light" ? null : styles.btnDarkTheme}
             navButton
