@@ -8,11 +8,11 @@ function NewsLetterModal({ onClick }) {
         <h4>Subscribe to our news letter</h4>
         <div className={styles.inputWrapper}>
           <label htmlFor="name">Your name</label>
-          <input name="name" type="text" className={styles.input} />
+          <input name="name" type="text" className={styles.input} required />
         </div>
         <div className={styles.inputWrapper}>
           <label htmlFor="email">Your email address</label>
-          <input name="email" type="email" className={styles.input} />
+          <input name="email" type="email" required className={styles.input} />
         </div>
 
         <button className={styles.subscribeButton} type="submit">

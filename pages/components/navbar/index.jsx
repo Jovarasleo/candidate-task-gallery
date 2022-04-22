@@ -5,6 +5,7 @@ import { BsSunFill, BsMoonFill } from "react-icons/bs";
 import { FiMail } from "react-icons/fi";
 import { default as Logo } from "../../Logo.svg";
 import ThemeContext from "../../../context/ThemeContext";
+import Button from "../button";
 import styles from "./styles.module.css";
 
 function Navbar({
@@ -35,38 +36,38 @@ function Navbar({
       <div className={styles.navWrapper}>
         <Logo className={styles.logo} />
         <div className={styles.buttonWrapper}>
-          <button
+          <Button
+            className={theme === "light" ? null : styles.btnDarkTheme}
+            navButton
             onClick={() => setShowFavourites(true)}
-            className={styles.navButtons.concat(
-              " ",
-              showFavourites ? styles.selected : null
-            )}
+            selected={showFavourites}
           >
             <FaRegHeart />
-          </button>
-          <button
+          </Button>
+          <Button
+            className={theme === "light" ? null : styles.btnDarkTheme}
+            navButton
             onClick={() => setShowFavourites(false)}
-            className={styles.navButtons.concat(
-              " ",
-              !showFavourites ? styles.selected : null
-            )}
+            selected={!showFavourites}
           >
             <MdOutlineImage />
-          </button>
+          </Button>
         </div>
         <div className={styles.buttonWrapper}>
-          <button
-            className={styles.navButtons}
+          <Button
+            className={theme === "light" ? null : styles.btnDarkTheme}
+            navButton
             onClick={() => setShowModal(!showModal)}
           >
             <FiMail />
-          </button>
-          <button
-            className={styles.navButtons.concat(" ", styles.bottomButtons)}
+          </Button>
+          <Button
+            className={theme === "light" ? null : styles.btnDarkTheme}
+            navButton
             onClick={() => toggleTheme(theme)}
           >
             {theme === "light" ? <BsMoonFill /> : <BsSunFill />}
-          </button>
+          </Button>
         </div>
       </div>
     </nav>

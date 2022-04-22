@@ -8,25 +8,15 @@
   height: 100%;
   background-color: rgb(68, 68, 68);
 }
-.favouriteButton {
-  cursor: pointer;
-  right: 0;
-  position: absolute;
-  background-color: #118dba;
-  border: none;
-  width: 40px;
-  height: 40px;
-}
-.favouriteButton svg {
-  color: white;
-  width: 18px;
-  height: 18px;
-}
 .landscape {
   height: 180px;
 }
 .portrait {
   height: 340px;
+}
+.favBtnPosition {
+  position: absolute;
+  right: 0;
 }
 @media screen and (-ms-high-contrast: active),
   screen and (-ms-high-contrast: none) {
@@ -41,7 +31,7 @@
   .imageWrapper {
     overflow: hidden;
   }
-  .favouriteButton {
+  .favBtnPosition {
     z-index: 1;
   }
 }

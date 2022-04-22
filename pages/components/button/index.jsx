@@ -1,10 +1,33 @@
 import styles from "./index.module.css";
-function Button({ children, closeButton, onClick, className, ...rest }) {
-  const btn = closeButton ? styles.closeButton : styles.btn;
+function Button({
+  children,
+  closeButton,
+  favouriteButton,
+  selected,
+  navButton,
+  onClick,
+  nonClickable,
+  className,
+  ...rest
+}) {
+  const btnStyle = () => {
+    if (closeButton) return styles.closeButton;
+    if (favouriteButton) return styles.favouriteButton;
+    if (navButton) {
+      return selected
+        ? styles.navButton.concat(" ", styles.selected)
+        : styles.navButton;
+    } else return styles.btn;
+  };
+  const Component = nonClickable ? "div" : "button";
   return (
-    <button className={btn.concat(" ", className)} onClick={onClick} {...rest}>
+    <Component
+      className={className ? btnStyle().concat(" ", className) : btnStyle()}
+      onClick={onClick}
+      {...rest}
+    >
       {children}
-    </button>
+    </Component>
   );
 }
 export default Button;

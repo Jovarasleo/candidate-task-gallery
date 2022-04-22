@@ -1,45 +1,63 @@
-import styles from "./index.module.css";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import FavouritesContext from "../../../context/FavouritesContext";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { MdDownload } from "react-icons/md";
 import { IoEye } from "react-icons/io5";
 import Button from "../button";
+import styles from "./index.module.css";
+
 function OpenImage({ image, onClick }) {
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
   const isFavourite = favourites.some((item) => item.id === image?.id);
   const [viewHeight, setViewHeight] = useState();
-  const downloadImage = async (data) => {
+
+  const downloadImage = async (data, id) => {
     const image = await fetch(data);
     const imageBlog = await image.blob();
     const imageURL = URL.createObjectURL(imageBlog);
     const link = document.createElement("a");
     link.href = imageURL;
-    link.download = data?.id;
+    link.download = id;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(imageURL);
     link.remove();
   };
-  function goToImage(id) {
+  const goToImage = (id) => {
     document.location.href = id;
-  }
+  };
+  const handleKeyDown = (e) => {
+    if (e.key === "Escape") {
+      onClick();
+    }
+  };
+
   useEffect(() => {
     setViewHeight(window.innerHeight);
   }, [viewHeight]);
+
   const url = image?.urls?.regular;
+
   return (
-    <div className={styles.imageBackdrop} onClick={onClick}>
+    <div
+      className={styles.imageBackdrop}
+      onClick={onClick}
+      onKeyDown={(e) => handleKeyDown(e)}
+    >
       <div
         className={styles.bigImageWrapper}
         onClick={(e) => e.stopPropagation()}
+        tabIndex="-1"
       >
         <div
           className={styles.imageWrapper}
           onDoubleClick={() => goToImage(image?.urls?.full)}
         >
-          <img src={url} alt="" />
+          <img
+            src={url}
+            alt={image?.description ? image?.description : image?.id}
+          />
         </div>
         <div className={styles.infoWrapper}>
           <Button onClick={onClick} closeButton></Button>
@@ -50,17 +68,18 @@ function OpenImage({ image, onClick }) {
                 <p className={styles.innerName}>{image?.user?.name}</p>
               </div>
 
-              <button
+              <Button
+                favouriteButton
                 className={styles.favouriteButton}
                 onClick={() => toggleFavourite(image)}
               >
                 {isFavourite ? <FaHeart /> : <FaRegHeart />}
-              </button>
+              </Button>
             </div>
             {image?.description ? (
               <div className={styles.infoDescription}>
                 <p className={styles.sectionName}>Description</p>
-                <p>{image?.description}</p>
+                <p className={styles.descriptionP}>{image?.description}</p>
               </div>
             ) : null}
 
@@ -69,12 +88,11 @@ function OpenImage({ image, onClick }) {
                 <FaHeart /> {image?.likes}
               </p>
               <p>
-                <button
-                  onClick={() => downloadImage(image?.urls.full)}
-                  className={styles.downloadButton}
+                <Button
+                  onClick={() => downloadImage(image?.urls.full, image.id)}
                 >
                   <MdDownload />
-                </button>
+                </Button>
                 {image?.downloads}
               </p>
               <p>

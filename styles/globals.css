@@ -2,9 +2,9 @@
 :root {
   --themePrimary: #151515;
   --themeSecondary: rgb(36, 36, 36);
-  --lightThemePrimary: rgb(255, 255, 255);
-  --lightThemeSecondary: rgb(244, 244, 244);
-  --dark: rgb(20, 20, 20);
+  --light-0: rgb(255, 255, 255);
+  --light-1: rgb(244, 244, 244);
+  --dark-1: rgb(20, 20, 20);
   --input: rgb(112, 112, 112);
   --dropdown: rgba(21, 21, 21, 0.8);
   --secondaryDropdown: rgba(15, 15, 15, 0.847);

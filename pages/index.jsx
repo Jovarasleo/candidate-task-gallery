@@ -1,18 +1,21 @@
 import React, { Suspense } from "react";
-import styles from "../styles/Home.module.css";
+import styles from "./index.module.css";
 import ImageCard from "./components/imageCard/index";
 import { useState, useEffect, useCallback, useContext, useRef } from "react";
 import useMediaQuery from "./util/useMediaQuery";
 import FavouritesContext from "../context/FavouritesContext";
 import Navbar from "./components/navbar";
-import NewsLetterModal from "./components/newsLetterModal";
-import useIsMobile from "./util/useIsMobile";
+import useIsIE from "./util/useIsIE";
+import useActiveElement from "./util/useActiveElement";
 import ThemeContext from "../context/ThemeContext";
 import DataContext from "../context/DataContext";
 import { useSwipeable } from "react-swipeable";
+import Spinner from "./components/spiner";
 import Head from "next/head";
-const OpenImage = React.lazy(() => import("./components/openImage"));
-
+const OpenImage = React.lazy(() => import("./components/openImageModal"));
+const NewsLetterModal = React.lazy(() =>
+  import("./components/newsLetterModal")
+);
 const Home = () => {
   const { theme } = useContext(ThemeContext);
   const {
@@ -31,25 +34,12 @@ const Home = () => {
   const [showImage, setShowImage] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [image, setImage] = useState("");
-  const isIE = useRef(false);
 
+  const isIE = useIsIE();
   const observer = useRef();
   const wait = useRef(false);
-  const isMobile = useIsMobile();
-
+  const focusedElement = useActiveElement();
   const isBreakpoint = useMediaQuery(768);
-
-  useEffect(() => {
-    const data = /*@cc_on!@*/ false || !!document.documentMode;
-    isIE.current = data;
-    if (!isIE) {
-      if (navigator.userAgent.indexOf("MSIE") > 0) {
-        isIE.current = true;
-      } else {
-        isIE.current = false;
-      }
-    }
-  }, []);
 
   const handlers = useSwipeable({
     onSwipedLeft: () => setShowNavbar(false),
@@ -108,7 +98,8 @@ const Home = () => {
 
   const lastItemRef = useCallback(
     (node) => {
-      if (!isIE.current) {
+      console.log(isIE);
+      if (!isIE) {
         if (observer.current) observer.current.disconnect();
         observer.current = new IntersectionObserver((entries) => {
           if (entries[0].isIntersecting) {
@@ -117,13 +108,13 @@ const Home = () => {
         });
         if (node) observer.current.observe(node);
       }
-      if (isIE.current) {
+      if (isIE) {
         console.log("IE found");
         window.addEventListener("scroll", handleScroll, true);
         return () => window.addEventListener("scroll", handleScroll, true);
       }
     },
-    [handleScroll]
+    [handleScroll, isIE]
   );
 
   useEffect(() => {
@@ -131,12 +122,20 @@ const Home = () => {
       setLoading(false);
       getPhotos();
     }
+
     if (showImage) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
     }
   }, [showImage, getPhotos, isLoading]);
+
+  useEffect(() => {
+    if (focusedElement) {
+      focusedElement.focus();
+    }
+  }, [focusedElement, showImage]);
+
   return (
     <div
       id="app"
@@ -238,7 +237,7 @@ const Home = () => {
             {error ? <h3 className={styles.errorMsg}>{error}</h3> : null}
           </div>
         </main>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Spinner />}>
           {showImage ? (
             <OpenImage
               image={image}
@@ -248,9 +247,11 @@ const Home = () => {
             />
           ) : null}
         </Suspense>
-        {showModal ? (
-          <NewsLetterModal onClick={() => setShowModal(!showModal)} />
-        ) : null}
+        <Suspense fallback={<Spinner />}>
+          {showModal ? (
+            <NewsLetterModal onClick={() => setShowModal(!showModal)} />
+          ) : null}
+        </Suspense>
       </div>
     </div>
   );

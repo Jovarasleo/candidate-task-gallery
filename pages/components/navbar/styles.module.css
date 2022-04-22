@@ -14,20 +14,16 @@
   transition-duration: 300ms;
   height: 100vh;
 }
-.navbarDark button {
-  color: #f4f4f4;
-}
-.navbarLight button {
-  color: rgb(36, 36, 36);
-}
+
 .logo {
   margin-top: 30px;
 }
 .navbarDark .logo {
   fill: #f4f4f4;
 }
-.navbarLight .logo {
-  fill: rgb(36, 36, 36);
+.btnDarkTheme {
+  color: white;
+  color: var(--light-0);
 }
 .navWrapper {
   width: 100%;
@@ -47,7 +43,7 @@
   border: none;
   transition-duration: 300ms;
   cursor: pointer;
-  background-color: inherit;
+  background-color: var(--themeSecondary);
 }
 .bottomButtons {
   margin-bottom: 40px;

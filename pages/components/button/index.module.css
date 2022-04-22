@@ -26,11 +26,45 @@
   transform: rotate(-45deg);
 }
 .btn {
+  background-color: transparent;
+  color: white;
   border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.favouriteButton {
+  cursor: pointer;
+  color: white;
+  background-color: #118dba;
+  background-color: var(--accent);
+  border: none;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+.navButton {
+  color: black;
+  background-color: transparent;
+  height: 80px;
+  width: 100%;
+  border: none;
+  transition-duration: 300ms;
+  cursor: pointer;
+  font-size: 24px;
+}
+.selected {
+  background-color: #118dba;
+  background-color: var(--accent);
+  color: white;
 }
 @media screen and (max-width: 768px) {
   .closeButton:before,
   .closeButton:after {
+    background-color: #118dba;
     background-color: var(--accent);
     width: 3px;
   }
