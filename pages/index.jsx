@@ -12,6 +12,7 @@ import DataContext from "../context/DataContext";
 import { useSwipeable } from "react-swipeable";
 import Spinner from "./components/spiner";
 import Head from "next/head";
+
 const OpenImage = React.lazy(() => import("./components/openImageModal"));
 const NewsLetterModal = React.lazy(() =>
   import("./components/newsLetterModal")
@@ -98,7 +99,6 @@ const Home = () => {
 
   const lastItemRef = useCallback(
     (node) => {
-      console.log(isIE);
       if (!isIE) {
         if (observer.current) observer.current.disconnect();
         observer.current = new IntersectionObserver((entries) => {
@@ -109,7 +109,6 @@ const Home = () => {
         if (node) observer.current.observe(node);
       }
       if (isIE) {
-        console.log("IE found");
         window.addEventListener("scroll", handleScroll, true);
         return () => window.addEventListener("scroll", handleScroll, true);
       }

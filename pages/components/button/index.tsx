@@ -1,4 +1,16 @@
 import styles from "./index.module.css";
+
+interface buttonProps {
+  children: JSX.Element;
+  closeButton?: boolean;
+  favouriteButton?: boolean;
+  selected?: boolean;
+  navButton?: boolean;
+  onClick?: React.MouseEventHandler;
+  nonClickable?: boolean;
+  className: string;
+}
+
 function Button({
   children,
   closeButton,
@@ -9,7 +21,7 @@ function Button({
   nonClickable,
   className,
   ...rest
-}) {
+}: buttonProps) {
   const btnStyle = () => {
     if (closeButton) return styles.closeButton;
     if (favouriteButton) return styles.favouriteButton;

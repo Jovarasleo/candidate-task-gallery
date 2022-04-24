@@ -1,27 +1,40 @@
 import { FaHeart } from "react-icons/fa";
-import { useContext } from "react";
+import { FC, useContext } from "react";
 import FavouritesContext from "../../../context/FavouritesContext";
 import Button from "../button";
 import styles from "./index.module.css";
 
-function ImageCard({ style, className, onClick, image, showImage }) {
+interface imageCardProps {
+  onClick: any;
+  className: string;
+  image: {
+    height: number;
+    width: number;
+    urls: { small: string };
+    description: string;
+    id: string;
+  };
+  showImage: boolean;
+  item: { id: string };
+}
+
+function ImageCard({ className, onClick, image, showImage }: imageCardProps) {
   const orientationClass =
     image?.height >= image?.width ? styles.portrait : styles.landscape;
   const newClass = styles.imageWrapper.concat(" ", orientationClass);
-
   const { favourites } = useContext(FavouritesContext);
-  const handleKeyDown = (e) => {
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter") {
       onClick();
     } else return;
   };
-  const isFavourite = favourites.some((item) => item.id === image?.id);
+  const isFavourite = favourites.some((item: any) => item.id === image?.id);
   const url = image?.urls?.small;
 
   return (
     <div
       className={newClass.concat(" ", className)}
-      style={style}
       onClick={onClick}
       tabIndex={!showImage ? 0 : -1}
       onKeyDown={(e) => handleKeyDown(e)}
