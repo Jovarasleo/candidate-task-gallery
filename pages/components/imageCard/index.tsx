@@ -29,7 +29,9 @@ function ImageCard({ className, onClick, image, showImage }: imageCardProps) {
       onClick();
     } else return;
   };
-  const isFavourite = favourites.some((item: any) => item.id === image?.id);
+  const isFavourite = favourites.some(
+    (item: { id: string }) => item.id === image?.id
+  );
   const url = image?.urls?.small;
 
   return (

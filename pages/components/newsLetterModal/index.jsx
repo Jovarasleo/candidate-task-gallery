@@ -1,5 +1,6 @@
 import Button from "../button";
 import styles from "./index.module.css";
+
 function NewsLetterModal({ onClick }) {
   return (
     <div className={styles.backdrop} onClick={onClick}>

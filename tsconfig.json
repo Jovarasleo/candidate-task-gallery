@@ -21,7 +21,8 @@
     "**/*.tsx",
     "pages/api/getImages.jsx",
     "public/index.jsx",
-    "pages/_app.jsx"
+    "pages/_app.jsx",
+    "pages/components/newsLetterModal/index.jsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -8,6 +8,15 @@ import ThemeContext from "../../../context/ThemeContext";
 import Button from "../button";
 import styles from "./styles.module.css";
 
+interface NavbarPros {
+  showFavourites: boolean;
+  setShowFavourites: (showFavourites: boolean) => void;
+  showNavbar: boolean;
+  image: {};
+  setShowModal: (showModal: boolean) => void;
+  showModal: boolean;
+}
+
 function Navbar({
   showFavourites,
   setShowFavourites,
@@ -15,7 +24,7 @@ function Navbar({
   image,
   setShowModal,
   showModal,
-}) {
+}: NavbarPros) {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
@@ -31,13 +40,13 @@ function Navbar({
               showNavbar ? styles.show : styles.hide
             )
       }
-      style={!image ? { zIndex: 1 } : null}
+      style={!image ? { zIndex: 1 } : {}}
     >
       <div className={styles.navWrapper}>
         <Logo className={styles.logo} />
         <div className={styles.buttonWrapper}>
           <Button
-            className={theme === "light" ? null : styles.btnDarkTheme}
+            className={theme === "light" ? "" : styles.btnDarkTheme}
             navButton
             onClick={() => setShowFavourites(true)}
             selected={showFavourites}
@@ -45,7 +54,7 @@ function Navbar({
             <FaRegHeart />
           </Button>
           <Button
-            className={theme === "light" ? null : styles.btnDarkTheme}
+            className={theme === "light" ? "" : styles.btnDarkTheme}
             navButton
             onClick={() => setShowFavourites(false)}
             selected={!showFavourites}
@@ -55,14 +64,14 @@ function Navbar({
         </div>
         <div className={styles.buttonWrapper.concat(" ", styles.bottomButtons)}>
           <Button
-            className={theme === "light" ? null : styles.btnDarkTheme}
+            className={theme === "light" ? "" : styles.btnDarkTheme}
             navButton
             onClick={() => setShowModal(!showModal)}
           >
             <FiMail />
           </Button>
           <Button
-            className={theme === "light" ? null : styles.btnDarkTheme}
+            className={theme === "light" ? "" : styles.btnDarkTheme}
             navButton
             onClick={() => toggleTheme(theme)}
           >

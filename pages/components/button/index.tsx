@@ -9,6 +9,7 @@ interface buttonProps {
   onClick?: React.MouseEventHandler;
   nonClickable?: boolean;
   className: string;
+  rest?: any;
 }
 
 function Button({
