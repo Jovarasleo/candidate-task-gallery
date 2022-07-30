@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useRef } from "react";
+import { useContext, useEffect, useState } from "react";
 import FavouritesContext from "../../../context/FavouritesContext";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { MdDownload } from "react-icons/md";
@@ -48,7 +48,7 @@ function OpenImage({ image, onClick }) {
       <div
         className={styles.bigImageWrapper}
         onClick={(e) => e.stopPropagation()}
-        tabIndex="-1"
+        tabIndex={-1}
       >
         <div
           className={styles.imageWrapper}

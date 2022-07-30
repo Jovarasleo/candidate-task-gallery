@@ -12,6 +12,7 @@ import DataContext from "../context/DataContext";
 import { useSwipeable } from "react-swipeable";
 import Spinner from "./components/spiner";
 import Head from "next/head";
+import useFetch from "./hooks/useFetch";
 
 const OpenImage = React.lazy(() => import("./components/openImageModal"));
 const NewsLetterModal = React.lazy(() =>
@@ -19,14 +20,6 @@ const NewsLetterModal = React.lazy(() =>
 );
 const Home = () => {
   const { theme } = useContext(ThemeContext);
-  const {
-    portraitImages,
-    setPortraitImages,
-    landscapeImages,
-    setLandscapeImages,
-    error,
-    setError,
-  } = useContext(DataContext);
   const { favourites } = useContext(FavouritesContext);
 
   const [showNavbar, setShowNavbar] = useState(true);
@@ -35,6 +28,11 @@ const Home = () => {
   const [showImage, setShowImage] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [image, setImage] = useState("");
+
+  const { landscapeImages, portraitImages, error } = useFetch(
+    "api/getImages",
+    isLoading
+  );
 
   const isIE = useIsIE();
   const observer = useRef();
@@ -58,28 +56,6 @@ const Home = () => {
       setShowNavbar(false);
     } else setShowNavbar(true);
   }, [isBreakpoint, setShowNavbar]);
-
-  const getPhotos = useCallback(async () => {
-    try {
-      const response = await fetch("api/getImages");
-      const data = await response.json();
-      if (data.success) {
-        setLandscapeImages([...landscapeImages, ...data.images.landscape]);
-        setPortraitImages([...portraitImages, ...data.images.portrait]);
-        setError(false);
-      } else {
-        setError(data.error);
-      }
-    } catch (error) {
-      setError(error);
-    }
-  }, [
-    landscapeImages,
-    portraitImages,
-    setPortraitImages,
-    setLandscapeImages,
-    setError,
-  ]);
 
   const handleScroll = useCallback(() => {
     if (
@@ -117,23 +93,18 @@ const Home = () => {
   );
 
   useEffect(() => {
-    if (isLoading) {
-      setLoading(false);
-      getPhotos();
-    }
-
     if (showImage) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
     }
-  }, [showImage, getPhotos, isLoading]);
+  }, [showImage, isLoading]);
 
   useEffect(() => {
     if (focusedElement) {
       focusedElement.focus();
     }
-  }, [focusedElement, showImage]);
+  }, [focusedElement, showImage, showModal, showFavourites]);
 
   return (
     <div
@@ -171,6 +142,7 @@ const Home = () => {
                         img={image?.urls?.thumb}
                         onClick={() => openImage(image)}
                         showImage={showImage}
+                        showModal={showModal}
                         setShowImage={setShowImage}
                       />
                     </div>
@@ -192,6 +164,7 @@ const Home = () => {
                           className={styles.seperator}
                           onClick={() => openImage(portraitImages[index])}
                           showImage={showImage}
+                          showModal={showModal}
                           setShowImage={setShowImage}
                         />
                         <ImageCard
@@ -200,6 +173,7 @@ const Home = () => {
                           img={image?.urls?.thumb}
                           onClick={() => openImage(image)}
                           showImage={showImage}
+                          showModal={showModal}
                           setShowImage={setShowImage}
                         />
                       </div>
@@ -219,6 +193,7 @@ const Home = () => {
                           className={styles.seperator}
                           onClick={() => openImage(image)}
                           showImage={showImage}
+                          showModal={showModal}
                           setShowImage={setShowImage}
                         />
                         <ImageCard
@@ -227,6 +202,7 @@ const Home = () => {
                           img={portraitImages[index]?.urls?.thumb}
                           onClick={() => openImage(portraitImages[index])}
                           showImage={showImage}
+                          showModal={showModal}
                           setShowImage={setShowImage}
                         />
                       </div>

@@ -15,10 +15,17 @@ interface imageCardProps {
     id: string;
   };
   showImage: boolean;
+  showModal: boolean;
   item: { id: string };
 }
 
-function ImageCard({ className, onClick, image, showImage }: imageCardProps) {
+function ImageCard({
+  className,
+  onClick,
+  image,
+  showImage,
+  showModal,
+}: imageCardProps) {
   const orientationClass =
     image?.height >= image?.width ? styles.portrait : styles.landscape;
   const newClass = styles.imageWrapper.concat(" ", orientationClass);
@@ -38,7 +45,7 @@ function ImageCard({ className, onClick, image, showImage }: imageCardProps) {
     <div
       className={newClass.concat(" ", className)}
       onClick={onClick}
-      tabIndex={!showImage ? 0 : -1}
+      tabIndex={!showImage && !showModal ? 0 : -1}
       onKeyDown={(e) => handleKeyDown(e)}
     >
       {isFavourite ? (

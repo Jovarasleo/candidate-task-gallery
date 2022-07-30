@@ -22,7 +22,8 @@
     "pages/api/getImages.jsx",
     "public/index.jsx",
     "pages/_app.jsx",
-    "pages/components/newsLetterModal/index.jsx"
+    "pages/components/navbar/newsLetterModal/index.jsx",
+    "pages/hooks/useFetch.jsx"
   ],
   "exclude": ["node_modules"]
 }

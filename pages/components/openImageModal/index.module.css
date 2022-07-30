@@ -20,8 +20,8 @@
   justify-content: center;
 }
 .imageWrapper {
-  backdrop-filter: blur(6px);
-  background-color: rgba(15, 15, 15, 0.847);
+  backdrop-filter: blur(10px);
+  background-color: rgba(21, 21, 21, 0.678);
   background-color: var(--secondaryDropdown);
   display: flex;
   justify-content: center;
@@ -38,7 +38,7 @@
   position: relative;
   max-width: 600px;
   width: 50%;
-  background-color: black;
+  background-color: #151515;
   padding: 67px 64px 45px 58px;
 }
 .infoWrapper__inner {
@@ -95,7 +95,7 @@
 }
 .sectionName {
   text-align: left;
-  font: normal normal bold 12px Sen;
+  font: bold 12px Sen;
   margin-bottom: 6px;
   letter-spacing: 0px;
   color: #adadad;
@@ -103,7 +103,7 @@
 .innerName {
   color: var(--accent);
   text-align: left;
-  font: normal normal bold 24px/35px Sen;
+  font: bold 24px Sen;
   letter-spacing: 0px;
   color: #118dba;
 }
@@ -139,7 +139,6 @@
 @media screen and (min-width: 768px) {
   .descriptionP {
     max-height: 265px;
-    overflow-y: scroll;
   }
 }
 @media screen and (max-width: 768px) {

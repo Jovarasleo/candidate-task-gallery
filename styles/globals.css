@@ -1,13 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap");
 :root {
-  --themePrimary: #151515;
+  --themePrimary: rgb(21, 21, 21);
   --themeSecondary: rgb(36, 36, 36);
   --light-0: rgb(255, 255, 255);
   --light-1: rgb(244, 244, 244);
   --dark-1: rgb(20, 20, 20);
   --input: rgb(112, 112, 112);
   --dropdown: rgba(21, 21, 21, 0.8);
-  --secondaryDropdown: rgba(15, 15, 15, 0.847);
+  --secondaryDropdown: rgba(21, 21, 21, 0.678);
   --accent: rgb(17, 141, 186);
   --speed: 500ms;
 }

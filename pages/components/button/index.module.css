@@ -27,7 +27,7 @@
 }
 .btn {
   background-color: transparent;
-  color: white;
+  color: rgb(255, 255, 255);
   border: none;
   cursor: pointer;
   padding: 0;
@@ -35,7 +35,7 @@
 
 .favouriteButton {
   cursor: pointer;
-  color: white;
+  color: rgb(255, 255, 255);
   background-color: #118dba;
   background-color: var(--accent);
   border: none;
@@ -47,7 +47,7 @@
   font-size: 18px;
 }
 .navButton {
-  color: black;
+  color: rgb(0, 0, 0);
   background-color: transparent;
   height: 80px;
   width: 100%;

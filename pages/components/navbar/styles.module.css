@@ -22,7 +22,7 @@
   fill: #f4f4f4;
 }
 .btnDarkTheme {
-  color: white;
+  color: rgb(255, 255, 255);
   color: var(--light-0);
 }
 .navWrapper {

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 const useActiveElement = () => {
   const [active, setActive] = useState();
 
-  const handleFocusIn = (e) => {
+  const handleFocusIn = () => {
     setActive(document.activeElement);
   };
 

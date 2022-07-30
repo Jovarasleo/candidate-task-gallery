@@ -12,21 +12,20 @@ interface NavbarPros {
   showFavourites: boolean;
   setShowFavourites: (showFavourites: boolean) => void;
   showNavbar: boolean;
-  image: {};
   setShowModal: (showModal: boolean) => void;
   showModal: boolean;
+  image: boolean;
 }
 
 function Navbar({
   showFavourites,
   setShowFavourites,
   showNavbar,
-  image,
   setShowModal,
   showModal,
+  image,
 }: NavbarPros) {
   const { theme, toggleTheme } = useContext(ThemeContext);
-
   return (
     <nav
       className={

@@ -25,7 +25,6 @@ const getImages = async (_, res) => {
       return res.status(200).json({ success: true, images: data });
     }
     if (landscape.status !== 200) {
-      console.log(landscape.status);
       res.status(500).json({ success: false });
     }
   } catch (error) {

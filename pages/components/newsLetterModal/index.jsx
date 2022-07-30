@@ -4,7 +4,11 @@ import styles from "./index.module.css";
 function NewsLetterModal({ onClick }) {
   return (
     <div className={styles.backdrop} onClick={onClick}>
-      <form className={styles.modal} onClick={(e) => e.stopPropagation()}>
+      <form
+        className={styles.modal}
+        onClick={(e) => e.stopPropagation()}
+        tabIndex={-1}
+      >
         <Button closeButton onClick={onClick} type="button" />
         <h4>Subscribe to our news letter</h4>
         <div className={styles.inputWrapper}>
