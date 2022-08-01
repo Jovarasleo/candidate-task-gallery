@@ -11,7 +11,7 @@ import ThemeContext from "../context/ThemeContext";
 import { useSwipeable } from "react-swipeable";
 import Spinner from "./components/spiner";
 import Head from "next/head";
-import useFetch from "./hooks/useFetch";
+import useFetch from "../hooks/useFetch";
 
 const OpenImage = React.lazy(() => import("./components/openImageModal"));
 const NewsLetterModal = React.lazy(() =>
@@ -92,7 +92,7 @@ const Home = () => {
       fetchData();
       setLoading(false);
     }
-  }, [isLoading]);
+  }, [isLoading, fetchData]);
 
   useEffect(() => {
     if (showImage) {
