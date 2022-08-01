@@ -8,7 +8,6 @@ import Navbar from "./components/navbar";
 import useIsIE from "./util/useIsIE";
 import useActiveElement from "./util/useActiveElement";
 import ThemeContext from "../context/ThemeContext";
-import DataContext from "../context/DataContext";
 import { useSwipeable } from "react-swipeable";
 import Spinner from "./components/spiner";
 import Head from "next/head";
@@ -29,11 +28,7 @@ const Home = () => {
   const [showModal, setShowModal] = useState(false);
   const [image, setImage] = useState("");
 
-  const { landscapeImages, portraitImages, error } = useFetch(
-    "api/getImages",
-    isLoading
-  );
-
+  const [{ images, error }, fetchData] = useFetch("api/getImages");
   const isIE = useIsIE();
   const observer = useRef();
   const wait = useRef(false);
@@ -93,6 +88,13 @@ const Home = () => {
   );
 
   useEffect(() => {
+    if (isLoading) {
+      fetchData();
+      setLoading(false);
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
     if (showImage) {
       document.body.style.overflow = "hidden";
     } else {
@@ -126,7 +128,6 @@ const Home = () => {
           showFavourites={showFavourites}
           setShowFavourites={setShowFavourites}
           setShowModal={setShowModal}
-          showModal={showModal}
           showNavbar={showNavbar}
           image={image}
         />
@@ -148,78 +149,37 @@ const Home = () => {
                     </div>
                   );
                 })
-              : landscapeImages?.map((image, index) => {
-                  const isLastElement = portraitImages.length === index + 1;
-                  if (index % 2 == 0) {
-                    return (
-                      <div
-                        className={styles.cardsWrapper}
-                        key={image.id + portraitImages[index]?.id + index}
-                        ref={isLastElement ? lastItemRef : null}
-                      >
-                        <ImageCard
-                          image={portraitImages[index]}
-                          key={portraitImages[index]?.id}
-                          img={portraitImages[index]?.urls?.thumb}
-                          className={styles.seperator}
-                          onClick={() => openImage(portraitImages[index])}
-                          showImage={showImage}
-                          showModal={showModal}
-                          setShowImage={setShowImage}
-                        />
-                        <ImageCard
-                          image={image}
-                          key={image?.id}
-                          img={image?.urls?.thumb}
-                          onClick={() => openImage(image)}
-                          showImage={showImage}
-                          showModal={showModal}
-                          setShowImage={setShowImage}
-                        />
-                      </div>
-                    );
-                  }
-                  if (index % 2 == 1) {
-                    return (
-                      <div
-                        className={styles.cardsWrapper}
-                        key={image.id + portraitImages[index]?.id + index}
-                        ref={isLastElement ? lastItemRef : null}
-                      >
-                        <ImageCard
-                          image={image}
-                          key={image?.id}
-                          img={image?.urls?.thumb}
-                          className={styles.seperator}
-                          onClick={() => openImage(image)}
-                          showImage={showImage}
-                          showModal={showModal}
-                          setShowImage={setShowImage}
-                        />
-                        <ImageCard
-                          image={portraitImages[index]}
-                          key={portraitImages[index]?.id}
-                          img={portraitImages[index]?.urls?.thumb}
-                          onClick={() => openImage(portraitImages[index])}
-                          showImage={showImage}
-                          showModal={showModal}
-                          setShowImage={setShowImage}
-                        />
-                      </div>
-                    );
-                  }
+              : images.map((card, index) => {
+                  const isLastElement = images.length === index + 1;
+                  return (
+                    <div
+                      className={styles.cardsWrapper}
+                      key={index}
+                      ref={isLastElement ? lastItemRef : null}
+                    >
+                      {card.map((image, i) => {
+                        return (
+                          <ImageCard
+                            image={image}
+                            key={image?.id}
+                            img={image?.urls?.thumb}
+                            className={i === 0 ? styles.seperator : ""}
+                            onClick={() => openImage(image)}
+                            showImage={showImage}
+                            showModal={showModal}
+                            setShowImage={setShowImage}
+                          />
+                        );
+                      })}
+                    </div>
+                  );
                 })}
             {error ? <h3 className={styles.errorMsg}>{error}</h3> : null}
           </div>
         </main>
         <Suspense fallback={<Spinner />}>
           {showImage ? (
-            <OpenImage
-              image={image}
-              onClick={() => openImage()}
-              portraitImages={portraitImages}
-              landscapeImages={landscapeImages}
-            />
+            <OpenImage image={image} onClick={() => openImage()} />
           ) : null}
         </Suspense>
         <Suspense fallback={<Spinner />}>

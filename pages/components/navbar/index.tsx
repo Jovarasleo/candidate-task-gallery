@@ -12,7 +12,7 @@ interface NavbarPros {
   showFavourites: boolean;
   setShowFavourites: (showFavourites: boolean) => void;
   showNavbar: boolean;
-  setShowModal: (showModal: boolean) => void;
+  setShowModal: (showModal: any) => void;
   showModal: boolean;
   image: boolean;
 }
@@ -22,7 +22,6 @@ function Navbar({
   setShowFavourites,
   showNavbar,
   setShowModal,
-  showModal,
   image,
 }: NavbarPros) {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -65,7 +64,9 @@ function Navbar({
           <Button
             className={theme === "light" ? "" : styles.btnDarkTheme}
             navButton
-            onClick={() => setShowModal(!showModal)}
+            onClick={() =>
+              setShowModal((previousState: boolean) => !previousState)
+            }
           >
             <FiMail />
           </Button>

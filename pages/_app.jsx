@@ -1,14 +1,12 @@
-import "../styles/globals.css";
 import { FavouritesProvider } from "../context/FavouritesContext";
 import { ThemeProvider } from "../context/ThemeContext";
-import { DataProvider } from "../context/DataContext";
+import "../styles/globals.css";
+
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider>
       <FavouritesProvider>
-        <DataProvider>
-          <Component {...pageProps} />
-        </DataProvider>
+        <Component {...pageProps} />
       </FavouritesProvider>
     </ThemeProvider>
   );
