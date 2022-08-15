@@ -1,14 +1,17 @@
 import { useState } from "react";
 const useFetch = (url) => {
   const [images, setData] = useState([]);
+  const [image, setImage] = useState();
   const [error, setError] = useState(null);
 
-  const fetchData = async () => {
+  const fetchData = async (id) => {
     try {
-      const response = await fetch(url);
+      const response = id ? await fetch(id) : await fetch(url);
       const data = await response.json();
       if (data.success) {
-        setData([...images, ...data.images]);
+        if (id) {
+          setImage(data?.image?.response);
+        } else setData([...images, ...data.images]);
         setError(null);
       } else {
         setError(data.error);
@@ -17,6 +20,6 @@ const useFetch = (url) => {
       setError(error);
     }
   };
-  return [{ images, error }, fetchData];
+  return [{ images, image, error }, fetchData];
 };
 export default useFetch;

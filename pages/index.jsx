@@ -23,12 +23,15 @@ const Home = () => {
 
   const [showNavbar, setShowNavbar] = useState(true);
   const [isLoading, setLoading] = useState(true);
+  const [isSingleImage, setIsSingleImage] = useState(false);
   const [showFavourites, setShowFavourites] = useState(false);
   const [showImage, setShowImage] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [image, setImage] = useState("");
 
-  const [{ images, error }, fetchData] = useFetch("api/getImages");
+  const [{ images, image: getImage, error }, fetchData] =
+    useFetch("api/getImages");
+
   const isIE = useIsIE();
   const observer = useRef();
   const wait = useRef(false);
@@ -42,9 +45,13 @@ const Home = () => {
     trackMouse: true,
   });
 
-  const openImage = (id) => {
+  const openImage = (image) => {
+    if (image) {
+      history.replaceState({}, null, `?id=${image.id}`);
+    } else
+      history.replaceState({}, null, window.location.href.split("/?id")[0]);
     setShowImage(!showImage);
-    setImage(id);
+    setImage(image);
   };
   useEffect(() => {
     if (isBreakpoint) {
@@ -88,11 +95,20 @@ const Home = () => {
   );
 
   useEffect(() => {
+    const id = window.location.href.split("id=")[1];
     if (isLoading) {
+      if (id) {
+        fetchData(`api/getImageById?id=${id}`);
+        setIsSingleImage(true);
+      }
       fetchData();
       setLoading(false);
     }
-  }, [isLoading, fetchData]);
+    if (getImage && isSingleImage) {
+      openImage(getImage);
+      setIsSingleImage(false);
+    }
+  }, [isLoading, fetchData, getImage]);
 
   useEffect(() => {
     if (showImage) {
@@ -100,7 +116,7 @@ const Home = () => {
     } else {
       document.body.style.overflow = "";
     }
-  }, [showImage, isLoading]);
+  }, [showImage]);
 
   useEffect(() => {
     if (focusedElement) {

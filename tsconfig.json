@@ -23,7 +23,7 @@
     "public/index.jsx",
     "pages/_app.jsx",
     "pages/components/navbar/newsLetterModal/index.jsx",
-    "pages/hooks/useFetch.jsx"
+    "hooks/useFetch.jsx"
   ],
   "exclude": ["node_modules"]
 }

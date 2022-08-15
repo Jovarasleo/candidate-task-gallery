@@ -96,7 +96,7 @@ function OpenImage({ image, onClick }) {
                 {image?.downloads}
               </p>
               <p>
-                <IoEye /> {image?.views.toLocaleString()}
+                <IoEye /> {image?.views?.toLocaleString()}
               </p>
             </div>
             <div className={styles.infoCamera}>
