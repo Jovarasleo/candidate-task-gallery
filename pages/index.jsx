@@ -12,6 +12,7 @@ import { useSwipeable } from "react-swipeable";
 import Spinner from "./components/spiner";
 import Head from "next/head";
 import useFetch from "../hooks/useFetch";
+import useDetectLastEl from "../hooks/useDetectLastEl";
 
 const OpenImage = React.lazy(() => import("./components/openImageModal"));
 const NewsLetterModal = React.lazy(() =>
@@ -33,7 +34,6 @@ const Home = () => {
     useFetch("api/getImages");
 
   const isIE = useIsIE();
-  const observer = useRef();
   const wait = useRef(false);
   const focusedElement = useActiveElement();
   const isBreakpoint = useMediaQuery(768);
@@ -75,24 +75,7 @@ const Home = () => {
     }
   }, []);
 
-  const lastItemRef = useCallback(
-    (node) => {
-      if (!isIE) {
-        if (observer.current) observer.current.disconnect();
-        observer.current = new IntersectionObserver((entries) => {
-          if (entries[0].isIntersecting) {
-            setLoading(true);
-          }
-        });
-        if (node) observer.current.observe(node);
-      }
-      if (isIE) {
-        window.addEventListener("scroll", handleScroll, true);
-        return () => window.addEventListener("scroll", handleScroll, true);
-      }
-    },
-    [handleScroll, isIE]
-  );
+  const lastItemRef = useDetectLastEl(isIE, setLoading, handleScroll);
 
   useEffect(() => {
     const id = window.location.href.split("id=")[1];
