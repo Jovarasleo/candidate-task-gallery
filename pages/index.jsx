@@ -13,6 +13,7 @@ import Spinner from "./components/spiner";
 import Head from "next/head";
 import useFetch from "../hooks/useFetch";
 import useDetectLastEl from "../hooks/useDetectLastEl";
+import useLoadImages from "../hooks/useLoadImages";
 
 const OpenImage = React.lazy(() => import("./components/openImageModal"));
 const NewsLetterModal = React.lazy(() =>
@@ -24,7 +25,7 @@ const Home = () => {
 
   const [showNavbar, setShowNavbar] = useState(true);
   const [isLoading, setLoading] = useState(true);
-  const [isSingleImage, setIsSingleImage] = useState(false);
+
   const [showFavourites, setShowFavourites] = useState(false);
   const [showImage, setShowImage] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -76,22 +77,7 @@ const Home = () => {
   }, []);
 
   const lastItemRef = useDetectLastEl(isIE, setLoading, handleScroll);
-
-  useEffect(() => {
-    const id = window.location.href.split("id=")[1];
-    if (isLoading) {
-      if (id) {
-        fetchData(`api/getImageById?id=${id}`);
-        setIsSingleImage(true);
-      }
-      fetchData();
-      setLoading(false);
-    }
-    if (getImage && isSingleImage) {
-      openImage(getImage);
-      setIsSingleImage(false);
-    }
-  }, [isLoading, fetchData, getImage]);
+  useLoadImages(isLoading, fetchData, setLoading, getImage, openImage);
 
   useEffect(() => {
     if (showImage) {
