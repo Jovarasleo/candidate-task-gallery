@@ -48,6 +48,8 @@ body {
   position: fixed;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  scrollbar-color: var(--text-color-accent) var(--background-color-secondary);
+  scrollbar-width: thin;
 }
 main {
   width: 100%;

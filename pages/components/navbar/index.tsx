@@ -4,7 +4,7 @@ import { MdOutlineImage } from "react-icons/md";
 import { BsSunFill, BsMoonFill } from "react-icons/bs";
 import { FiMail } from "react-icons/fi";
 import { default as Logo } from "../../Logo.svg";
-import ThemeContext from "../../../context/ThemeContext";
+import useSelectTheme from "../../../hooks/useSelectTheme";
 import clsx from "clsx";
 import Button from "../button";
 import styles from "./styles.module.css";
@@ -25,7 +25,8 @@ function Navbar({
   setShowModal,
   image,
 }: NavbarPros) {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme, toggleTheme } = useSelectTheme();
+  // const { theme, toggleTheme } = useContext(ThemeContext);
   return (
     <nav
       className={clsx(showNavbar ? styles.show : styles.hide, styles.navbar)}
@@ -58,7 +59,7 @@ function Navbar({
           >
             <FiMail />
           </Button>
-          <Button navButton onClick={() => toggleTheme(theme)}>
+          <Button navButton onClick={() => toggleTheme()}>
             {theme === "light" ? <BsMoonFill /> : <BsSunFill />}
           </Button>
         </div>
