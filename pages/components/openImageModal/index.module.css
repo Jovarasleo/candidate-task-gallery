@@ -22,7 +22,7 @@
 .imageWrapper {
   backdrop-filter: blur(10px);
   background-color: rgba(21, 21, 21, 0.678);
-  background-color: var(--secondaryDropdown);
+  background-color: var(--dropdown-theme);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,7 +38,8 @@
   position: relative;
   max-width: 600px;
   width: 50%;
-  background-color: #151515;
+  background-color: var(--background-color-secondary);
+  color: var(--text-color);
   padding: 67px 64px 45px 58px;
 }
 .infoWrapper__inner {
@@ -60,7 +61,7 @@
 .infoDescription {
   flex: 1;
   font: bold 18px Sen;
-  color: #ffffff;
+  color: var(--text-color);
   margin-bottom: 32px;
 }
 .infoStatistics {
@@ -98,7 +99,7 @@
   font: bold 12px Sen;
   margin-bottom: 6px;
   letter-spacing: 0px;
-  color: #adadad;
+  color: var(--text-color);
 }
 .innerName {
   color: var(--accent);

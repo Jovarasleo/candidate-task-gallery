@@ -5,6 +5,7 @@ import { BsSunFill, BsMoonFill } from "react-icons/bs";
 import { FiMail } from "react-icons/fi";
 import { default as Logo } from "../../Logo.svg";
 import ThemeContext from "../../../context/ThemeContext";
+import clsx from "clsx";
 import Button from "../button";
 import styles from "./styles.module.css";
 
@@ -27,24 +28,13 @@ function Navbar({
   const { theme, toggleTheme } = useContext(ThemeContext);
   return (
     <nav
-      className={
-        theme === "light"
-          ? styles.navbarLight.concat(
-              " ",
-              showNavbar ? styles.show : styles.hide
-            )
-          : styles.navbarDark.concat(
-              " ",
-              showNavbar ? styles.show : styles.hide
-            )
-      }
+      className={clsx(showNavbar ? styles.show : styles.hide, styles.navbar)}
       style={!image ? { zIndex: 1 } : {}}
     >
       <div className={styles.navWrapper}>
         <Logo className={styles.logo} />
         <div className={styles.buttonWrapper}>
           <Button
-            className={theme === "light" ? "" : styles.btnDarkTheme}
             navButton
             onClick={() => setShowFavourites(true)}
             selected={showFavourites}
@@ -52,7 +42,6 @@ function Navbar({
             <FaRegHeart />
           </Button>
           <Button
-            className={theme === "light" ? "" : styles.btnDarkTheme}
             navButton
             onClick={() => setShowFavourites(false)}
             selected={!showFavourites}
@@ -60,9 +49,8 @@ function Navbar({
             <MdOutlineImage />
           </Button>
         </div>
-        <div className={styles.buttonWrapper.concat(" ", styles.bottomButtons)}>
+        <div className={clsx(styles.buttonWrapper, styles.bottomButtons)}>
           <Button
-            className={theme === "light" ? "" : styles.btnDarkTheme}
             navButton
             onClick={() =>
               setShowModal((previousState: boolean) => !previousState)
@@ -70,11 +58,7 @@ function Navbar({
           >
             <FiMail />
           </Button>
-          <Button
-            className={theme === "light" ? "" : styles.btnDarkTheme}
-            navButton
-            onClick={() => toggleTheme(theme)}
-          >
+          <Button navButton onClick={() => toggleTheme(theme)}>
             {theme === "light" ? <BsMoonFill /> : <BsSunFill />}
           </Button>
         </div>

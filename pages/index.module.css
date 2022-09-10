@@ -4,18 +4,7 @@
   min-height: 100vh;
   display: flex;
   position: relative;
-}
-.containerDark {
-  background-color: rgb(24, 24, 24);
-}
-.containerLight {
-  background-color: #ffffff;
-}
-.appdark {
-  background-color: rgb(24, 24, 24);
-}
-.applight {
-  background-color: #ffffff;
+  background-color: var(--background-color-primary);
 }
 .gallery {
   grid-gap: 25px;
@@ -33,7 +22,7 @@
 }
 .errorMsg {
   text-align: center;
-  color: #ffffff;
+  color: var(--text-color);
   font-size: 26px;
   margin: 40px auto;
 }

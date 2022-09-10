@@ -6,8 +6,6 @@ import useMediaQuery from "./util/useMediaQuery";
 import FavouritesContext from "../context/FavouritesContext";
 import Navbar from "./components/navbar";
 import useIsIE from "./util/useIsIE";
-
-import ThemeContext from "../context/ThemeContext";
 import { useSwipeable } from "react-swipeable";
 import Spinner from "./components/spiner";
 import Head from "next/head";
@@ -21,7 +19,6 @@ const NewsLetterModal = React.lazy(() =>
   import("./components/newsLetterModal")
 );
 const Home = () => {
-  const { theme } = useContext(ThemeContext);
   const { favourites } = useContext(FavouritesContext);
 
   const [showNavbar, setShowNavbar] = useState(true);
@@ -55,6 +52,7 @@ const Home = () => {
     setShowImage(!showImage);
     setImage(image);
   };
+
   useEffect(() => {
     if (isBreakpoint) {
       setShowNavbar(false);
@@ -67,19 +65,13 @@ const Home = () => {
   return (
     <div
       id="app"
-      className={theme === "light" ? styles.applight : styles.appdark}
       {...(isBreakpoint ? handlers : {})}
       style={{ touchAction: "pan-y" }}
     >
       <Head>
         <title>Gallery</title>
       </Head>
-      <div
-        className={styles.container.concat(
-          " ",
-          theme === "light" ? styles.containerLight : styles.containerDark
-        )}
-      >
+      <div className={styles.container}>
         <Navbar
           showFavourites={showFavourites}
           setShowFavourites={setShowFavourites}

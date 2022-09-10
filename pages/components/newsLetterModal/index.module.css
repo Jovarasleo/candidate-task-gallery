@@ -11,7 +11,7 @@
   align-items: center;
 }
 .modal {
-  color: rgb(255, 255, 255);
+  color: var(--text-color);
   box-sizing: border-box;
   padding: 60px;
   width: 100%;
@@ -19,7 +19,7 @@
   max-width: 610px;
   max-height: 410px;
   background-color: #151515;
-  background-color: var(--themePrimary);
+  background-color: var(--background-color-primary);
   position: relative;
 }
 .inputWrapper {
@@ -35,13 +35,13 @@
 }
 .modal label {
   font: bold 12px Sen;
-  color: #adadad;
+  color: var(--text-color-accent);
   margin-bottom: 8px;
 }
 .input {
-  background-color: #202020;
+  background-color: var(--background-color-secondary);
   border: 1px solid #707070;
-  color: var(--lightThemePrimary);
+  color: var(--text-color);
   height: 40px;
 }
 .subscribeButton {
@@ -55,5 +55,5 @@
   border: none;
   background-color: rgb(17, 141, 186);
   background-color: var(--accent);
-  color: var(--lightThemePrimary);
+  color: var(--light-1);
 }

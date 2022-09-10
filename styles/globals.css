@@ -1,20 +1,41 @@
 @import url("https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap");
 :root {
-  --themePrimary: rgb(21, 21, 21);
-  --themeSecondary: rgb(36, 36, 36);
-  --light-0: rgb(255, 255, 255);
-  --light-1: rgb(244, 244, 244);
-  --dark-1: rgb(20, 20, 20);
-  --input: rgb(112, 112, 112);
-  --dropdown: rgba(21, 21, 21, 0.8);
-  --secondaryDropdown: rgba(21, 21, 21, 0.678);
-  --accent: rgb(17, 141, 186);
+  --themePrimary: #151515;
+  --themeSecondary: #242424;
+  --light-0: #ffffff;
+  --light-1: #f4f4f4;
+  --dark-1: #141414;
+  --input: #707070;
+  --dropdown: #151515cc;
+  --secondaryDropdown: #151515ad;
+  --accent: hsl(196, 83%, 40%);
   --speed: 500ms;
+}
+
+html[data-theme="light"] {
+  --background-color-primary: #ececec;
+  --background-color-secondary: #d8d8d8;
+  --input-background: #f4f4f4;
+  --dropdown-theme: #ffffffad;
+  --text-color: #202020;
+  --text-color-accent: #5c5c5c;
+}
+
+html[data-theme="dark"] {
+  --background-color-primary: #151515;
+  --background-color-secondary: #242424;
+  --input-background: #202020;
+  --dropdown-theme: #141414ad;
+  --text-color: #f4f4f4;
+  --text-color-accent: #adadad;
 }
 html {
   overflow: hidden;
   width: 100%;
   height: 100vh;
+}
+#app {
+  background-color: var(--background-color-primary);
 }
 body {
   padding: 0;
@@ -37,7 +58,6 @@ main {
 }
 p {
   margin: 0;
-  color: white;
 }
 * {
   box-sizing: border-box;

@@ -1,6 +1,7 @@
 import { FaHeart } from "react-icons/fa";
 import { useContext, useEffect } from "react";
 import FavouritesContext from "../../../context/FavouritesContext";
+import clsx from "clsx";
 import Button from "../button";
 import styles from "./index.module.css";
 
@@ -26,9 +27,6 @@ function ImageCard({
   showImage,
   showModal,
 }: imageCardProps) {
-  const orientationClass =
-    image?.height >= image?.width ? styles.portrait : styles.landscape;
-  const newClass = styles.imageWrapper.concat(" ", orientationClass);
   const { favourites } = useContext(FavouritesContext);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -36,9 +34,11 @@ function ImageCard({
       onClick();
     } else return;
   };
+
   const isFavourite = favourites.some(
     (item: { id: string }) => item.id === image?.id
   );
+
   const url = image?.urls?.small;
 
   useEffect(() => {
@@ -51,7 +51,11 @@ function ImageCard({
 
   return (
     <div
-      className={newClass.concat(" ", className)}
+      className={clsx(
+        image.height > image.width ? styles.portrait : styles.landscapem,
+        styles.imageWrapper,
+        className
+      )}
       onClick={onClick}
       tabIndex={!showImage && !showModal ? 0 : -1}
       onKeyDown={(e) => handleKeyDown(e)}

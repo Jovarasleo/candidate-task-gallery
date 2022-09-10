@@ -5,9 +5,10 @@ const ThemeContext = createContext();
 function ThemeProvider({ children }) {
   const [theme, setTheme] = useState();
   useEffect(() => {
-    const data = localStorage.getItem(THEME_KEY) || "light";
+    const data = localStorage.getItem(THEME_KEY) || "dark";
+    document.documentElement.setAttribute("data-theme", theme);
     setTheme(data);
-  }, []);
+  }, [theme]);
 
   const toggleTheme = () => {
     if (theme === "light") {
