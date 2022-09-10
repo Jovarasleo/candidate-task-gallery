@@ -1,5 +1,5 @@
 import { FaHeart } from "react-icons/fa";
-import { FC, useContext } from "react";
+import { useContext, useEffect } from "react";
 import FavouritesContext from "../../../context/FavouritesContext";
 import Button from "../button";
 import styles from "./index.module.css";
@@ -40,6 +40,14 @@ function ImageCard({
     (item: { id: string }) => item.id === image?.id
   );
   const url = image?.urls?.small;
+
+  useEffect(() => {
+    if (showImage) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [showImage]);
 
   return (
     <div

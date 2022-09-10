@@ -6,7 +6,7 @@ import useMediaQuery from "./util/useMediaQuery";
 import FavouritesContext from "../context/FavouritesContext";
 import Navbar from "./components/navbar";
 import useIsIE from "./util/useIsIE";
-import useActiveElement from "./util/useActiveElement";
+
 import ThemeContext from "../context/ThemeContext";
 import { useSwipeable } from "react-swipeable";
 import Spinner from "./components/spiner";
@@ -14,6 +14,7 @@ import Head from "next/head";
 import useFetch from "../hooks/useFetch";
 import useInfiniteScroll from "../hooks/useInfiniteScroll";
 import useLoadImages from "../hooks/useLoadImages";
+import useFocusElement from "../hooks/useFocusElement";
 
 const OpenImage = React.lazy(() => import("./components/openImageModal"));
 const NewsLetterModal = React.lazy(() =>
@@ -29,13 +30,14 @@ const Home = () => {
   const [showFavourites, setShowFavourites] = useState(false);
   const [showImage, setShowImage] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
   const [image, setImage] = useState("");
 
   const [{ images, image: getImage, error }, fetchData] =
     useFetch("api/getImages");
 
   const isIE = useIsIE();
-  const focusedElement = useActiveElement();
+  useFocusElement(showImage, showModal, showFavourites);
   const isBreakpoint = useMediaQuery(768);
 
   const handlers = useSwipeable({
@@ -61,20 +63,6 @@ const Home = () => {
 
   const lastItemRef = useInfiniteScroll(isIE, setLoading);
   useLoadImages(isLoading, fetchData, setLoading, getImage, openImage);
-
-  useEffect(() => {
-    if (showImage) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-  }, [showImage]);
-
-  useEffect(() => {
-    if (focusedElement) {
-      focusedElement.focus();
-    }
-  }, [focusedElement, showImage, showModal, showFavourites]);
 
   return (
     <div

@@ -1,6 +1,7 @@
 .imageWrapper {
   position: relative;
   cursor: pointer;
+  overflow: hidden;
 }
 .imageWrapper:focus-visible {
   box-shadow: 0px 0px 3px 3px var(--accent);
@@ -11,28 +12,26 @@
   height: 100%;
   background-color: rgb(68, 68, 68);
 }
-.landscape {
-  height: 180px;
-}
-.portrait {
-  height: 340px;
-}
 .favBtnPosition {
   position: absolute;
   right: 0;
 }
-
-@media screen and (max-width: 416px) {
-  .landscape {
-    height: 210px;
-  }
-  .portrait {
-    height: 400px;
-  }
+.landscape {
+  flex: 2;
 }
-
+.portrait {
+  flex: 5;
+}
 @media screen and (-ms-high-contrast: active),
   screen and (-ms-high-contrast: none) {
+  .landscape {
+    height: 180px;
+    flex: none;
+  }
+  .portrait {
+    height: 320px;
+    flex: none;
+  }
   .imageWrapper img {
     overflow: hidden;
     height: auto;
@@ -40,9 +39,6 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-  }
-  .imageWrapper {
-    overflow: hidden;
   }
   .favBtnPosition {
     z-index: 1;

@@ -2,7 +2,6 @@
   margin: 0 auto;
   max-width: 1600px;
   min-height: 100vh;
-  flex: 1;
   display: flex;
   position: relative;
 }
@@ -19,20 +18,18 @@
   background-color: #ffffff;
 }
 .gallery {
-  max-width: 1600px;
-  display: flex;
-  flex-wrap: wrap;
   grid-gap: 25px;
   margin-left: 110px;
   margin-top: 25px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
 }
 .seperator {
   margin-bottom: 25px;
 }
 .cardsWrapper {
-  max-height: 550px;
-  max-width: 270px;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .errorMsg {
   text-align: center;
@@ -53,9 +50,6 @@
   .seperator {
     margin-bottom: 20px;
   }
-  .cardsWrapper {
-    max-width: none;
-  }
   .gallery {
     grid-gap: 20px;
   }
@@ -63,7 +57,14 @@
 @media screen and (-ms-high-contrast: active),
   screen and (-ms-high-contrast: none) {
   .cardsWrapper {
+    max-height: 550px;
+    max-width: 270px;
+    width: 100%;
     margin-right: 25px;
     margin-bottom: 25px;
+  }
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
   }
 }
