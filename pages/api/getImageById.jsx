@@ -1,7 +1,8 @@
 import { createApi } from "unsplash-js";
+import { cachedImages } from "./getImages";
 const accessKey = process.env.API_KEY;
-
 const getImageById = async (req, res) => {
+  console.log(cachedImages);
   const unsplash = createApi({
     accessKey: accessKey,
   });

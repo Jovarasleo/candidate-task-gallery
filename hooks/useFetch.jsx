@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 const useFetch = (url) => {
   const [images, setData] = useState([]);
   const [image, setImage] = useState();
   const [error, setError] = useState(null);
-
+  const [requestCount, setRequestCount] = useState(0);
+  console.log(`${url}/?${requestCount}`);
   const fetchData = async (id) => {
     try {
-      const response = id ? await fetch(id) : await fetch(url);
+      setRequestCount(requestCount + 1);
+      const response = id
+        ? await fetch(id)
+        : await fetch(`${url}?count=${requestCount}`);
       const data = await response.json();
       if (data.success) {
         if (id) {
