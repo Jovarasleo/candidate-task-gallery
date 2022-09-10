@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import styles from "./index.module.css";
 import ImageCard from "./components/imageCard/index";
-import { useState, useEffect, useCallback, useContext, useRef } from "react";
+import { useState, useEffect, useContext } from "react";
 import useMediaQuery from "./util/useMediaQuery";
 import FavouritesContext from "../context/FavouritesContext";
 import Navbar from "./components/navbar";
@@ -12,7 +12,7 @@ import { useSwipeable } from "react-swipeable";
 import Spinner from "./components/spiner";
 import Head from "next/head";
 import useFetch from "../hooks/useFetch";
-import useDetectLastEl from "../hooks/useDetectLastEl";
+import useInfiniteScroll from "../hooks/useInfiniteScroll";
 import useLoadImages from "../hooks/useLoadImages";
 
 const OpenImage = React.lazy(() => import("./components/openImageModal"));
@@ -35,7 +35,6 @@ const Home = () => {
     useFetch("api/getImages");
 
   const isIE = useIsIE();
-  const wait = useRef(false);
   const focusedElement = useActiveElement();
   const isBreakpoint = useMediaQuery(768);
 
@@ -60,23 +59,7 @@ const Home = () => {
     } else setShowNavbar(true);
   }, [isBreakpoint, setShowNavbar]);
 
-  const handleScroll = useCallback(() => {
-    if (
-      document.body.scrollTop + window.innerHeight >=
-        document.body.scrollHeight &&
-      !wait.current
-    ) {
-      wait.current = true;
-      if (wait.current) {
-        setLoading(true);
-      }
-      setTimeout(function () {
-        wait.current = false;
-      }, 1000);
-    }
-  }, []);
-
-  const lastItemRef = useDetectLastEl(isIE, setLoading, handleScroll);
+  const lastItemRef = useInfiniteScroll(isIE, setLoading);
   useLoadImages(isLoading, fetchData, setLoading, getImage, openImage);
 
   useEffect(() => {

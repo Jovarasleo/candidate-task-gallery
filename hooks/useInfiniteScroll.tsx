@@ -1,10 +1,28 @@
 import { useCallback, useRef } from "react";
-const useDetectLastEl = (
+
+const useInfiniteScroll = (
   isIE: boolean,
-  setLoading: (isloading: boolean) => void,
-  handleScroll: () => void
+  setLoading: (isloading: boolean) => void
 ) => {
+  const wait = useRef(false);
   const observer = useRef<IntersectionObserver | null>(null);
+
+  const handleScroll = useCallback(() => {
+    if (
+      document.body.scrollTop + window.innerHeight >=
+        document.body.scrollHeight &&
+      !wait.current
+    ) {
+      wait.current = true;
+      if (wait.current) {
+        setLoading(true);
+      }
+      setTimeout(function () {
+        wait.current = false;
+      }, 1000);
+    }
+  }, [setLoading]);
+
   const lastItemRef = useCallback(
     (node: HTMLElement) => {
       if (!isIE) {
@@ -25,4 +43,4 @@ const useDetectLastEl = (
   );
   return lastItemRef;
 };
-export default useDetectLastEl;
+export default useInfiniteScroll;
