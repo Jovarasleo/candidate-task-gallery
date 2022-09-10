@@ -6,8 +6,8 @@
   height: 100vh;
   transition-property: transform;
   transition-duration: 300ms;
-  z-index: 1;
 }
+
 .logo {
   margin-top: 30px;
   fill: var(--text-color);

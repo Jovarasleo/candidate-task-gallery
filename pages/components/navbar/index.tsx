@@ -26,7 +26,7 @@ function Navbar({
   image,
 }: NavbarPros) {
   const { theme, toggleTheme } = useSelectTheme();
-  // const { theme, toggleTheme } = useContext(ThemeContext);
+
   return (
     <nav
       className={clsx(showNavbar ? styles.show : styles.hide, styles.navbar)}
