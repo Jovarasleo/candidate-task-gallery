@@ -4,7 +4,9 @@
   position: fixed;
   display: flex;
   height: 100vh;
-  transition-duration: var(--speed);
+  transition-property: transform;
+  transition-duration: 300ms;
+  z-index: 1;
 }
 .logo {
   margin-top: 30px;
@@ -19,11 +21,12 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  transition-duration: var(--speed);
 }
+
 .buttonWrapper {
   width: 100%;
 }
+
 .navButtons {
   height: 80px;
   width: 100%;
@@ -31,21 +34,27 @@
   cursor: pointer;
   background-color: var(--themeSecondary);
 }
+
 .bottomButtons {
   margin-bottom: 40px;
 }
+
 .navButtons svg {
   font-size: 24px;
 }
+
 .selected {
   background-color: var(--accent);
   color: var(--light-0);
 }
+
 .show {
   transform: translateX(0px);
 }
+
 .hide {
   transform: translateX(-80px);
 }
+
 @media screen and (max-width: 768px) {
 }

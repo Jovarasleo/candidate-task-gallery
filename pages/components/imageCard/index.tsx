@@ -52,7 +52,7 @@ function ImageCard({
   return (
     <div
       className={clsx(
-        image.height > image.width ? styles.portrait : styles.landscapem,
+        image?.height > image?.width ? styles.portrait : styles.landscapem,
         styles.imageWrapper,
         className
       )}
