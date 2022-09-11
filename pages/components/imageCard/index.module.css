@@ -22,25 +22,3 @@
 .portrait {
   flex: 5;
 }
-@media screen and (-ms-high-contrast: active),
-  screen and (-ms-high-contrast: none) {
-  .landscape {
-    height: 180px;
-    flex: none;
-  }
-  .portrait {
-    height: 320px;
-    flex: none;
-  }
-  .imageWrapper img {
-    overflow: hidden;
-    height: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  .favBtnPosition {
-    z-index: 1;
-  }
-}

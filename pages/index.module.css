@@ -43,17 +43,3 @@
     grid-gap: 20px;
   }
 }
-@media screen and (-ms-high-contrast: active),
-  screen and (-ms-high-contrast: none) {
-  .cardsWrapper {
-    max-height: 550px;
-    max-width: 270px;
-    width: 100%;
-    margin-right: 25px;
-    margin-bottom: 25px;
-  }
-  .gallery {
-    display: flex;
-    flex-wrap: wrap;
-  }
-}

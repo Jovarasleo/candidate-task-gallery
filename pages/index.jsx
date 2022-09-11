@@ -1,18 +1,20 @@
 import React, { Suspense } from "react";
-import styles from "./index.module.css";
-import ImageCard from "./components/imageCard/index";
 import { useState, useEffect, useContext } from "react";
-import useMediaQuery from "./util/useMediaQuery";
-import FavouritesContext from "../context/FavouritesContext";
-import Navbar from "./components/navbar";
-import useIsIE from "./util/useIsIE";
 import { useSwipeable } from "react-swipeable";
-import Spinner from "./components/spiner";
 import Head from "next/head";
+
+import ImageCard from "./components/imageCard/index";
+import Navbar from "./components/navbar";
+import Spinner from "./components/spiner";
+
+import FavouritesContext from "../context/FavouritesContext";
 import useFetch from "../hooks/useFetch";
 import useInfiniteScroll from "../hooks/useInfiniteScroll";
 import useLoadImages from "../hooks/useLoadImages";
 import useFocusElement from "../hooks/useFocusElement";
+import useMediaQuery from "../hooks/useMediaQuery";
+
+import styles from "./index.module.css";
 
 const OpenImage = React.lazy(() => import("./components/openImageModal"));
 const NewsLetterModal = React.lazy(() =>
@@ -33,7 +35,6 @@ const Home = () => {
   const [{ images, image: getImage, error }, fetchData] =
     useFetch("api/getImages");
 
-  const isIE = useIsIE();
   useFocusElement(showImage, showModal, showFavourites);
   const isBreakpoint = useMediaQuery(768);
 
@@ -59,7 +60,7 @@ const Home = () => {
     } else setShowNavbar(true);
   }, [isBreakpoint, setShowNavbar]);
 
-  const lastItemRef = useInfiniteScroll(isIE, setLoading);
+  const lastItemRef = useInfiniteScroll(setLoading);
   useLoadImages(isLoading, fetchData, setLoading, getImage, openImage);
 
   return (
