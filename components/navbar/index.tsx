@@ -1,10 +1,9 @@
-import { useContext } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { MdOutlineImage } from "react-icons/md";
 import { BsSunFill, BsMoonFill } from "react-icons/bs";
 import { FiMail } from "react-icons/fi";
-import { default as Logo } from "../../Logo.svg";
-import useSelectTheme from "../../../hooks/useSelectTheme";
+import { default as Logo } from "./Logo.svg";
+import useSelectTheme from "../../hooks/useSelectTheme";
 import clsx from "clsx";
 import Button from "../button";
 import styles from "./styles.module.css";

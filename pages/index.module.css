@@ -1,11 +1,3 @@
-.container {
-  margin: 0 auto;
-  max-width: 1600px;
-  min-height: 100vh;
-  display: flex;
-  position: relative;
-  background-color: var(--background-color-primary);
-}
 .gallery {
   grid-gap: 25px;
   margin-left: 110px;
@@ -33,8 +25,11 @@
   }
 }
 @media screen and (max-width: 416px) {
-  .cardsWrapper {
+  /* .cardsWrapper {
     max-height: 640px;
+  } */
+  .gallery {
+    grid-template-columns: none;
   }
   .seperator {
     margin-bottom: 20px;

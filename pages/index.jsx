@@ -3,9 +3,9 @@ import { useState, useEffect, useContext } from "react";
 import { useSwipeable } from "react-swipeable";
 import Head from "next/head";
 
-import ImageCard from "./components/imageCard/index";
-import Navbar from "./components/navbar";
-import Spinner from "./components/spiner";
+import ImageCard from "../components/imageCard/index";
+import Navbar from "../components/navbar";
+import Spinner from "../components/spiner";
 
 import FavouritesContext from "../context/FavouritesContext";
 import useFetch from "../hooks/useFetch";
@@ -16,11 +16,11 @@ import useMediaQuery from "../hooks/useMediaQuery";
 
 import styles from "./index.module.css";
 
-const OpenImage = React.lazy(() => import("./components/openImageModal"));
+const OpenImage = React.lazy(() => import("../components/openImageModal"));
 const NewsLetterModal = React.lazy(() =>
-  import("./components/newsLetterModal")
+  import("../components/newsLetterModal")
 );
-const Home = () => {
+const Gallery = () => {
   const { favourites } = useContext(FavouritesContext);
 
   const [showNavbar, setShowNavbar] = useState(true);
@@ -72,72 +72,72 @@ const Home = () => {
       <Head>
         <title>Gallery</title>
       </Head>
-      <div className={styles.container}>
-        <Navbar
-          showFavourites={showFavourites}
-          setShowFavourites={setShowFavourites}
-          setShowModal={setShowModal}
-          showNavbar={showNavbar}
-          image={image}
-        />
-        <main className={styles.main}>
-          <div className={styles.gallery}>
-            {showFavourites
-              ? favourites?.map((image) => {
-                  return (
-                    <div className={styles.cardsWrapper} key={image?.id}>
-                      <ImageCard
-                        image={image}
-                        key={image?.id}
-                        img={image?.urls?.thumb}
-                        onClick={() => openImage(image)}
-                        showImage={showImage}
-                        showModal={showModal}
-                        setShowImage={setShowImage}
-                      />
-                    </div>
-                  );
-                })
-              : images.map((card, index) => {
-                  const isLastElement = images.length === index + 1;
-                  return (
-                    <div
-                      className={styles.cardsWrapper}
-                      key={index}
-                      ref={isLastElement ? lastItemRef : null}
-                    >
-                      {card.map((image, i) => {
-                        return (
-                          <ImageCard
-                            image={image}
-                            key={image?.id}
-                            img={image?.urls?.thumb}
-                            className={i === 0 ? styles.seperator : ""}
-                            onClick={() => openImage(image)}
-                            showImage={showImage}
-                            showModal={showModal}
-                            setShowImage={setShowImage}
-                          />
-                        );
-                      })}
-                    </div>
-                  );
-                })}
-            {error ? <h3 className={styles.errorMsg}>{error}</h3> : null}
-          </div>
-        </main>
-        <Suspense fallback={<Spinner />}>
-          {showImage ? (
-            <OpenImage image={image} onClick={() => openImage()} />
+      <Navbar
+        showFavourites={showFavourites}
+        setShowFavourites={setShowFavourites}
+        setShowModal={setShowModal}
+        showNavbar={showNavbar}
+        image={image}
+      />
+      <main className={styles.main}>
+        <div className={styles.gallery}>
+          {showFavourites
+            ? favourites?.map((image) => {
+                return (
+                  <div className={styles.cardsWrapper} key={image?.id}>
+                    <ImageCard
+                      image={image}
+                      key={image?.id}
+                      img={image?.urls?.thumb}
+                      onClick={() => openImage(image)}
+                      showImage={showImage}
+                      showModal={showModal}
+                      setShowImage={setShowImage}
+                    />
+                  </div>
+                );
+              })
+            : images.map((card, index) => {
+                const isLastElement = images.length === index + 1;
+                return (
+                  <div
+                    className={styles.cardsWrapper}
+                    key={index}
+                    ref={isLastElement ? lastItemRef : null}
+                  >
+                    {card.map((image, i) => {
+                      return (
+                        <ImageCard
+                          image={image}
+                          key={image?.id}
+                          img={image?.urls?.thumb}
+                          className={i === 0 ? styles.seperator : ""}
+                          onClick={() => openImage(image)}
+                          showImage={showImage}
+                          showModal={showModal}
+                          setShowImage={setShowImage}
+                        />
+                      );
+                    })}
+                  </div>
+                );
+              })}
+          {error && !showFavourites ? (
+            <h3 className={styles.errorMsg}>{error}</h3>
           ) : null}
-        </Suspense>
-        <Suspense fallback={<Spinner />}>
-          {showModal ? (
-            <NewsLetterModal onClick={() => setShowModal(!showModal)} />
-          ) : null}
-        </Suspense>
-      </div>
+        </div>
+      </main>
+      <Suspense fallback={<Spinner />}>
+        {showImage ? (
+          <OpenImage image={image} onClick={() => openImage()} />
+        ) : null}
+      </Suspense>
+      <Suspense fallback={<Spinner />}>
+        {showModal ? (
+          <NewsLetterModal onClick={() => setShowModal(!showModal)} />
+        ) : null}
+      </Suspense>
     </div>
   );
 };
-export default Home;
+export default Gallery;

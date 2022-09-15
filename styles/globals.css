@@ -1,4 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap");
+* {
+  box-sizing: border-box;
+}
+
 :root {
   --themePrimary: #151515;
   --themeSecondary: #242424;
@@ -29,38 +33,32 @@ html[data-theme="dark"] {
   --text-color: #f4f4f4;
   --text-color-accent: #adadad;
 }
-html {
-  overflow: hidden;
-  width: 100%;
-  height: 100vh;
-}
-#app {
-  background-color: var(--background-color-primary);
-}
+
 body {
   padding: 0;
   margin: 0;
   font-family: "Sen", sans-serif, -apple-system, BlinkMacSystemFont, Segoe UI,
     Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
     sans-serif;
-  height: 100vh;
+  background-color: var(--background-color-primary);
   width: 100%;
-  position: fixed;
-  overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   scrollbar-color: var(--text-color-accent) var(--background-color-secondary);
   scrollbar-width: thin;
 }
-main {
+
+#app {
+  min-height: 100vh;
   width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
 }
+
 #logo a {
   color: inherit;
   text-decoration: none;
 }
+
 p {
   margin: 0;
-}
-* {
-  box-sizing: border-box;
 }

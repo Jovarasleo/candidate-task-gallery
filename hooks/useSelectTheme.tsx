@@ -11,7 +11,7 @@ function useSelectTheme() {
     setTheme(data);
   }, [theme]);
 
-  const toggleTheme = () => {
+  const toggleTheme = ():void => {
     if (theme === "light") {
       setTheme("dark");
       localStorage.setItem(THEME_KEY, "dark");

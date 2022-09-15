@@ -1,11 +1,11 @@
 import { useState } from "react";
 const useFetch = (url: string) => {
   const [images, setData] = useState<Array<Object>>([]);
-  const [image, setImage] = useState();
-  const [error, setError] = useState(null);
+  const [image, setImage] = useState<Object>();
+  const [error, setError] = useState<String | null>();
   const [requestCount, setRequestCount] = useState(0);
 
-  const fetchData = async (id: string) => {
+  const fetchData = async (id: string):Promise<void> => {
     try {
       setRequestCount(requestCount + 1);
       const response = id
@@ -14,12 +14,11 @@ const useFetch = (url: string) => {
       const data = await response.json();
       if (data.success) {
         if (id) {
-          console.log(data?.image?.response);
           setImage(data?.image?.response);
         } else setData([...images, ...data.images]);
         setError(null);
       } else {
-        setError(data.error);
+        data.error? setError(data.error) : setError("An Unexpected Error Occurred");
       }
     } catch (ex: any) {
       setError(ex);

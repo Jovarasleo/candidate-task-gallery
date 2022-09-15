@@ -1,6 +1,7 @@
 import { FaHeart } from "react-icons/fa";
 import { useContext, useEffect } from "react";
-import FavouritesContext from "../../../context/FavouritesContext";
+import FavouritesContext from "../../context/FavouritesContext";
+
 import clsx from "clsx";
 import Button from "../button";
 import styles from "./index.module.css";

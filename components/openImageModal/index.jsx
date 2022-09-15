@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import FavouritesContext from "../../../context/FavouritesContext";
+import FavouritesContext from "../../context/FavouritesContext";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { MdDownload } from "react-icons/md";
 import { IoEye } from "react-icons/io5";
