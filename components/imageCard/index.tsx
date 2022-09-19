@@ -19,6 +19,7 @@ interface imageCardProps {
   showImage: boolean;
   showModal: boolean;
   item: { id: string };
+  index: number;
 }
 
 function ImageCard({
@@ -27,6 +28,7 @@ function ImageCard({
   image,
   showImage,
   showModal,
+  index,
 }: imageCardProps) {
   const { favourites } = useContext(FavouritesContext);
 
@@ -53,7 +55,7 @@ function ImageCard({
   return (
     <div
       className={clsx(
-        image?.height > image?.width ? styles.portrait : styles.landscapem,
+        image?.height > image?.width ? styles.portrait : styles.landscape,
         styles.imageWrapper,
         className
       )}

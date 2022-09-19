@@ -23,8 +23,9 @@
     "public/index.jsx",
     "pages/_app.jsx",
     "pages/components/navbar/newsLetterModal/index.jsx",
-    "hooks/useFetch.tsx",
-    "pages/components/newsLetterModal/index.jsx"
+    "hooks/useFetch&Load.tsx",
+    "pages/components/newsLetterModal/index.jsx",
+    "components/Gallery/index.jsx"
   ],
   "exclude": ["node_modules"]
 }

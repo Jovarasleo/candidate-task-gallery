@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { FaRegHeart } from "react-icons/fa";
+import useMediaQuery from "../../hooks/useMediaQuery";
 import { MdOutlineImage } from "react-icons/md";
 import { BsSunFill, BsMoonFill } from "react-icons/bs";
 import { FiMail } from "react-icons/fi";
@@ -12,8 +14,9 @@ interface NavbarPros {
   showFavourites: boolean;
   setShowFavourites: (showFavourites: boolean) => void;
   showNavbar: boolean;
-  setShowModal: (showModal: any) => void;
+  setShowNavbar: (showNavbar: boolean) => void;
   showModal: boolean;
+  setShowModal: any;
   image: boolean;
 }
 
@@ -21,10 +24,18 @@ function Navbar({
   showFavourites,
   setShowFavourites,
   showNavbar,
+  setShowNavbar,
   setShowModal,
   image,
 }: NavbarPros) {
   const { theme, toggleTheme } = useSelectTheme();
+  const isBreakpoint = useMediaQuery(768);
+
+  useEffect(() => {
+    if (isBreakpoint) {
+      setShowNavbar(false);
+    } else setShowNavbar(true);
+  }, [isBreakpoint, setShowNavbar]);
 
   return (
     <nav

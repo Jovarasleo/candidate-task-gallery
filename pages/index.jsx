@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { useSwipeable } from "react-swipeable";
 import Head from "next/head";
 
@@ -8,9 +8,8 @@ import Navbar from "../components/navbar";
 import Spinner from "../components/spiner";
 
 import FavouritesContext from "../context/FavouritesContext";
-import useFetch from "../hooks/useFetch";
+import useFetchnLoad from "../hooks/useFetch&Load";
 import useInfiniteScroll from "../hooks/useInfiniteScroll";
-import useLoadImages from "../hooks/useLoadImages";
 import useFocusElement from "../hooks/useFocusElement";
 import useMediaQuery from "../hooks/useMediaQuery";
 
@@ -25,17 +24,9 @@ const Gallery = () => {
 
   const [showNavbar, setShowNavbar] = useState(true);
   const [isLoading, setLoading] = useState(true);
-
   const [showFavourites, setShowFavourites] = useState(false);
-  const [showImage, setShowImage] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState((current) => (current = false));
 
-  const [image, setImage] = useState("");
-
-  const [{ images, image: getImage, error }, fetchData] =
-    useFetch("api/getImages");
-
-  useFocusElement(showImage, showModal, showFavourites);
   const isBreakpoint = useMediaQuery(768);
 
   const handlers = useSwipeable({
@@ -44,25 +35,22 @@ const Gallery = () => {
     preventDefaultTouchmoveEvent: true,
     trackMouse: true,
   });
-
   const openImage = (image) => {
     if (image) {
       history.replaceState({}, null, `?id=${image.id}`);
     } else
       history.replaceState({}, null, window.location.href.split("/?id")[0]);
-    setShowImage(!showImage);
     setImage(image);
   };
 
-  useEffect(() => {
-    if (isBreakpoint) {
-      setShowNavbar(false);
-    } else setShowNavbar(true);
-  }, [isBreakpoint, setShowNavbar]);
+  const { imageArray, image, error, setImage } = useFetchnLoad(
+    isLoading,
+    setLoading,
+    openImage
+  );
 
+  useFocusElement(image, showModal, showFavourites);
   const lastItemRef = useInfiniteScroll(setLoading);
-  useLoadImages(isLoading, fetchData, setLoading, getImage, openImage);
-
   return (
     <div
       id="app"
@@ -76,6 +64,7 @@ const Gallery = () => {
         showFavourites={showFavourites}
         setShowFavourites={setShowFavourites}
         setShowModal={setShowModal}
+        setShowNavbar={setShowNavbar}
         showNavbar={showNavbar}
         image={image}
       />
@@ -90,15 +79,13 @@ const Gallery = () => {
                       key={image?.id}
                       img={image?.urls?.thumb}
                       onClick={() => openImage(image)}
-                      showImage={showImage}
                       showModal={showModal}
-                      setShowImage={setShowImage}
                     />
                   </div>
                 );
               })
-            : images.map((card, index) => {
-                const isLastElement = images.length === index + 1;
+            : imageArray.map((card, index) => {
+                const isLastElement = imageArray.length === index + 1;
                 return (
                   <div
                     className={styles.cardsWrapper}
@@ -113,9 +100,7 @@ const Gallery = () => {
                           img={image?.urls?.thumb}
                           className={i === 0 ? styles.seperator : ""}
                           onClick={() => openImage(image)}
-                          showImage={showImage}
                           showModal={showModal}
-                          setShowImage={setShowImage}
                         />
                       );
                     })}
@@ -128,9 +113,7 @@ const Gallery = () => {
         </div>
       </main>
       <Suspense fallback={<Spinner />}>
-        {showImage ? (
-          <OpenImage image={image} onClick={() => openImage()} />
-        ) : null}
+        {image ? <OpenImage image={image} onClick={() => openImage()} /> : null}
       </Suspense>
       <Suspense fallback={<Spinner />}>
         {showModal ? (

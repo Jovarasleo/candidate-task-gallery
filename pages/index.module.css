@@ -5,12 +5,12 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
 }
-.seperator {
-  margin-bottom: 25px;
-}
 .cardsWrapper {
   display: flex;
   flex-direction: column;
+}
+.seperator {
+  margin-bottom: 25px;
 }
 .errorMsg {
   text-align: center;
@@ -25,9 +25,6 @@
   }
 }
 @media screen and (max-width: 416px) {
-  /* .cardsWrapper {
-    max-height: 640px;
-  } */
   .gallery {
     grid-template-columns: none;
   }
