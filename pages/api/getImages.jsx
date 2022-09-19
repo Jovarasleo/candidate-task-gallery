@@ -19,7 +19,6 @@ const getImages = async (req, res) => {
     });
 
     if (landscape.status === 200 && portrait.status === 200) {
-      // requestsMade += 1;
       console.log("request");
       function formatData() {
         let dataArray = [];
@@ -35,7 +34,6 @@ const getImages = async (req, res) => {
           }
           dataArray.push(pairArray);
         }
-        // createCache(dataArray);
         return dataArray;
       }
 

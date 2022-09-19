@@ -1,4 +1,5 @@
 import { createApi } from "unsplash-js";
+
 const accessKey = process.env.API_KEY;
 
 const getImageById = async (req, res) => {
