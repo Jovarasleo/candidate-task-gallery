@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useSwipeable } from "react-swipeable";
 import Head from "next/head";
 
@@ -36,11 +36,13 @@ const Gallery = () => {
     trackMouse: true,
   });
   const openImage = (image) => {
+    setImage(image);
     if (image) {
       history.replaceState({}, null, `?id=${image.id}`);
-    } else
+    } else {
       history.replaceState({}, null, window.location.href.split("/?id")[0]);
-    setImage(image);
+      setImage(null);
+    }
   };
 
   const { imageArray, image, error, setImage } = useFetchnLoad(
@@ -51,11 +53,23 @@ const Gallery = () => {
 
   useFocusElement(image, showModal, showFavourites);
   const lastItemRef = useInfiniteScroll(setLoading);
+
+  useEffect(() => {
+    if (image) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.paddingRight = "16px";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.paddingRight = "0px";
+    }
+  }, [image]);
+
   return (
     <div
       id="app"
       {...(isBreakpoint ? handlers : {})}
       style={{ touchAction: "pan-y" }}
+      className={error | showFavourites && styles.heightLimit}
     >
       <Head>
         <title>Gallery</title>
@@ -89,13 +103,15 @@ const Gallery = () => {
                 return (
                   <div
                     className={styles.cardsWrapper}
-                    key={index}
+                    key={`${card[0]?.id}${card[1]?.id}`}
                     ref={isLastElement ? lastItemRef : null}
                   >
                     {card.map((image, i) => {
                       return (
                         <ImageCard
                           image={image}
+                          index={index}
+                          i={i}
                           key={image?.id}
                           img={image?.urls?.thumb}
                           className={i === 0 ? styles.seperator : ""}

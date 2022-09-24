@@ -1,7 +1,6 @@
 import { FaHeart } from "react-icons/fa";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import FavouritesContext from "../../context/FavouritesContext";
-
 import clsx from "clsx";
 import Button from "../button";
 import styles from "./index.module.css";
@@ -20,6 +19,7 @@ interface imageCardProps {
   showModal: boolean;
   item: { id: string };
   index: number;
+  i: number;
 }
 
 function ImageCard({
@@ -28,7 +28,6 @@ function ImageCard({
   image,
   showImage,
   showModal,
-  index,
 }: imageCardProps) {
   const { favourites } = useContext(FavouritesContext);
 
@@ -44,18 +43,10 @@ function ImageCard({
 
   const url = image?.urls?.small;
 
-  useEffect(() => {
-    if (showImage) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-  }, [showImage]);
-
   return (
     <div
       className={clsx(
-        image?.height > image?.width ? styles.portrait : styles.landscape,
+        image?.height > image?.width && styles.portrait,
         styles.imageWrapper,
         className
       )}

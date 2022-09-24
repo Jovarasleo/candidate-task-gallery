@@ -16,6 +16,10 @@
   --speed: 500ms;
 }
 
+html {
+  position: relative;
+}
+
 html[data-theme="light"] {
   --background-color-primary: #ececec;
   --background-color-secondary: #d8d8d8;
@@ -48,10 +52,31 @@ body {
 }
 
 #app {
-  min-height: 100vh;
   width: 100%;
   max-width: 1600px;
   margin: 0 auto;
+  display: flex;
+}
+@media only screen and (max-width: 986px) {
+  #app {
+    min-height: 600vh;
+  }
+}
+@media only screen and (max-width: 1282px) {
+  #app {
+    min-height: 300vh;
+  }
+}
+@media only screen and (min-width: 1282px) {
+  #app {
+    min-height: 200vh;
+  }
+}
+main {
+  display: flex;
+  width: 100%;
+  flex-grow: 1;
+  min-height: 100vh;
 }
 
 #logo a {

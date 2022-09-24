@@ -29,7 +29,7 @@ const useFetchnLoad = (
 
     if (isLoading) {
       fetchData("api/getImages").then((data) => {
-        setImageArray([...imageArray, ...data.images]);
+        if (data) setImageArray([...imageArray, ...data?.images]);
       });
 
       if (id) {

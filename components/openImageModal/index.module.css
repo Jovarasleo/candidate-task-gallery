@@ -12,9 +12,10 @@
 }
 .bigImageWrapper {
   position: relative;
-  height: 714px;
+  max-height: 714px;
   max-width: 1200px;
   width: 100%;
+  height: 100%;
   object-fit: contain;
   display: flex;
   justify-content: center;
@@ -130,7 +131,8 @@
 }
 @media screen and (min-width: 1600px) and (min-height: 900px) {
   .bigImageWrapper {
-    height: 900px;
+    right: 8px;
+    max-height: 900px;
     max-width: 1600px;
   }
   .imageWrapper {
