@@ -110,11 +110,8 @@ const Gallery = () => {
                       return (
                         <ImageCard
                           image={image}
-                          index={index}
-                          i={i}
                           key={image?.id}
                           img={image?.urls?.thumb}
-                          className={i === 0 ? styles.seperator : ""}
                           onClick={() => openImage(image)}
                           showModal={showModal}
                         />

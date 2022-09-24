@@ -18,8 +18,6 @@ interface imageCardProps {
   showImage: boolean;
   showModal: boolean;
   item: { id: string };
-  index: number;
-  i: number;
 }
 
 function ImageCard({

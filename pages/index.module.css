@@ -1,7 +1,7 @@
 .gallery {
   flex-grow: 1;
   grid-gap: 25px;
-  margin-left: 110px;
+  margin-left: 115px;
   margin-top: 25px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
@@ -11,10 +11,11 @@
 }
 .cardsWrapper {
   max-width: 600px;
-  max-height: 1280px;
+  max-height: 1320px;
   height: 100%;
   display: flex;
   flex-direction: column;
+  gap: 25px;
 }
 .seperator {
   margin-bottom: 25px;
@@ -32,14 +33,21 @@
     justify-content: center;
   }
 }
+@media screen and (max-width: 631px) {
+  .gallery > div:nth-child(even) div:first-child {
+    order: 1;
+  }
+}
 @media screen and (max-width: 416px) {
   .gallery {
     grid-template-columns: none;
   }
-  .seperator {
-    margin-bottom: 20px;
-  }
+
   .gallery {
     grid-gap: 20px;
+  }
+
+  .cardsWrapper {
+    gap: 20px;
   }
 }
