@@ -1,7 +1,9 @@
 import { createApi } from "unsplash-js";
+
 const accessKey = process.env.API_KEY;
 const imageCount = 20;
-const getImages = async (_, res) => {
+
+const getImages = async (req, res) => {
   const unsplash = createApi({
     accessKey: accessKey,
   });
@@ -17,6 +19,7 @@ const getImages = async (_, res) => {
     });
 
     if (landscape.status === 200 && portrait.status === 200) {
+      console.log("request");
       function formatData() {
         let dataArray = [];
         for (let i = 0; i < 20; i++) {
@@ -38,6 +41,7 @@ const getImages = async (_, res) => {
       res.setHeader("Cache-Control", "no-cache");
       return res.status(200).json({ success: true, images: data });
     }
+
     if (landscape.status !== 200) {
       res.status(500).json({ success: false });
     }

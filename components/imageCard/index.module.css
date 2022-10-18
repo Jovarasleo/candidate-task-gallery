@@ -1,0 +1,27 @@
+.imageWrapper {
+  position: relative;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: var(--themeSecondary);
+}
+.imageWrapper:focus-visible {
+  box-shadow: 0px 0px 3px 3px var(--accent);
+}
+.imageWrapper img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.favBtnPosition {
+  position: absolute;
+  right: 0;
+}
+.landscape {
+  flex: 2;
+}
+.portrait {
+  flex: 5;
+}

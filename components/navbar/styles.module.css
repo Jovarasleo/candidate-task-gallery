@@ -1,30 +1,19 @@
-.navbarDark {
-  background-color: rgb(36, 36, 36);
+.navbar {
+  top: 0;
+  background-color: var(--background-color-secondary);
   width: 90px;
   position: fixed;
   display: flex;
-  transition-duration: 300ms;
   height: 100vh;
-}
-.navbarLight {
-  background-color: #f4f4f4;
-  width: 90px;
-  position: fixed;
-  display: flex;
+  transition-property: transform;
   transition-duration: 300ms;
-  height: 100vh;
 }
 
 .logo {
   margin-top: 30px;
+  fill: var(--text-color);
 }
-.navbarDark .logo {
-  fill: #f4f4f4;
-}
-.btnDarkTheme {
-  color: rgb(255, 255, 255);
-  color: var(--light-0);
-}
+
 .navWrapper {
   width: 100%;
   margin: auto 0;
@@ -34,32 +23,36 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .buttonWrapper {
   width: 100%;
 }
+
 .navButtons {
   height: 80px;
   width: 100%;
   border: none;
-  transition-duration: 300ms;
   cursor: pointer;
   background-color: var(--themeSecondary);
 }
+
 .bottomButtons {
   margin-bottom: 40px;
 }
+
 .navButtons svg {
   font-size: 24px;
 }
+
 .selected {
   background-color: var(--accent);
-  color: white;
+  color: var(--light-0);
 }
+
 .show {
   transform: translateX(0px);
 }
+
 .hide {
   transform: translateX(-80px);
-}
-@media screen and (max-width: 768px) {
 }

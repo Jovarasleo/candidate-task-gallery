@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import styles from "./index.module.css";
 
 interface buttonProps {
@@ -8,7 +9,7 @@ interface buttonProps {
   navButton?: boolean;
   onClick?: React.MouseEventHandler;
   nonClickable?: boolean;
-  className: string;
+  className?: string;
   rest?: any;
 }
 
@@ -23,7 +24,7 @@ function Button({
   className,
   ...rest
 }: buttonProps) {
-  const btnStyle = () => {
+  const selectStyle = () => {
     if (closeButton) return styles.closeButton;
     if (favouriteButton) return styles.favouriteButton;
     if (navButton) {
@@ -32,13 +33,10 @@ function Button({
         : styles.navButton;
     } else return styles.btn;
   };
+  const btnType = selectStyle();
   const Component = nonClickable ? "div" : "button";
   return (
-    <Component
-      className={className ? btnStyle().concat(" ", className) : btnStyle()}
-      onClick={onClick}
-      {...rest}
-    >
+    <Component className={clsx(btnType, className)} onClick={onClick} {...rest}>
       {children}
     </Component>
   );

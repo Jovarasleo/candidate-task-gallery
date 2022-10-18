@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import FavouritesContext from "../../../context/FavouritesContext";
+import FavouritesContext from "../../context/FavouritesContext";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { MdDownload } from "react-icons/md";
 import { IoEye } from "react-icons/io5";
@@ -9,7 +9,7 @@ import styles from "./index.module.css";
 function OpenImage({ image, onClick }) {
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
   const isFavourite = favourites.some((item) => item.id === image?.id);
-  const [viewHeight, setViewHeight] = useState();
+  const [viewHeight, setViewHeight] = useState(0);
 
   const downloadImage = async (data, id) => {
     const image = await fetch(data);

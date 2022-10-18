@@ -27,7 +27,7 @@
 }
 .btn {
   background-color: transparent;
-  color: rgb(255, 255, 255);
+  color: var(--text-color);
   border: none;
   cursor: pointer;
   padding: 0;
@@ -47,7 +47,8 @@
   font-size: 18px;
 }
 .navButton {
-  color: rgb(0, 0, 0);
+  background-color: var(--background-color-primary);
+  color: var(--text-color);
   background-color: transparent;
   height: 80px;
   width: 100%;

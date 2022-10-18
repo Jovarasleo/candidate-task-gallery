@@ -1,44 +1,89 @@
 @import url("https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap");
+* {
+  box-sizing: border-box;
+}
+
 :root {
-  --themePrimary: rgb(21, 21, 21);
-  --themeSecondary: rgb(36, 36, 36);
-  --light-0: rgb(255, 255, 255);
-  --light-1: rgb(244, 244, 244);
-  --dark-1: rgb(20, 20, 20);
-  --input: rgb(112, 112, 112);
-  --dropdown: rgba(21, 21, 21, 0.8);
-  --secondaryDropdown: rgba(21, 21, 21, 0.678);
-  --accent: rgb(17, 141, 186);
+  --themePrimary: #151515;
+  --themeSecondary: #242424;
+  --light-0: #ffffff;
+  --light-1: #f4f4f4;
+  --dark-1: #141414;
+  --input: #707070;
+  --dropdown: #151515cc;
+  --secondaryDropdown: #151515ad;
+  --accent: hsl(196, 83%, 40%);
   --speed: 500ms;
 }
+
 html {
-  overflow: hidden;
-  width: 100%;
-  height: 100vh;
+  position: relative;
 }
+
+html[data-theme="light"] {
+  --background-color-primary: #ececec;
+  --background-color-secondary: #d8d8d8;
+  --input-background: #f4f4f4;
+  --dropdown-theme: #ffffffad;
+  --text-color: #202020;
+  --text-color-accent: #5c5c5c;
+}
+
+html[data-theme="dark"] {
+  --background-color-primary: #151515;
+  --background-color-secondary: #242424;
+  --input-background: #202020;
+  --dropdown-theme: #141414ad;
+  --text-color: #f4f4f4;
+  --text-color-accent: #adadad;
+}
+
 body {
   padding: 0;
   margin: 0;
   font-family: "Sen", sans-serif, -apple-system, BlinkMacSystemFont, Segoe UI,
     Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
     sans-serif;
-  height: 100vh;
+  background-color: var(--background-color-primary);
   width: 100%;
-  position: fixed;
-  overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  scrollbar-color: var(--text-color-accent) var(--background-color-secondary);
+  scrollbar-width: thin;
+}
+
+#app {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+}
+@media only screen and (max-width: 986px) {
+  #app {
+    min-height: 600vh;
+  }
+}
+@media only screen and (max-width: 1282px) {
+  #app {
+    min-height: 300vh;
+  }
+}
+@media only screen and (min-width: 1282px) {
+  #app {
+    min-height: 200vh;
+  }
 }
 main {
+  display: flex;
   width: 100%;
+  flex-grow: 1;
+  min-height: 100vh;
 }
+
 #logo a {
   color: inherit;
   text-decoration: none;
 }
+
 p {
   margin: 0;
-  color: white;
-}
-* {
-  box-sizing: border-box;
 }
