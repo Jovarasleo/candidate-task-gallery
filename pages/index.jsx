@@ -64,6 +64,32 @@ const Gallery = () => {
     }
   }, [image]);
 
+  const sorter = (array) => {
+    let portraits = [];
+    let landscapes = [];
+    let squares = [];
+
+    array.map((image) => {
+      if (image?.height / image?.width > 1.3) {
+        portraits.push(image);
+      }
+
+      if (
+        image?.height / image?.width < 1.3 &&
+        image?.height / image?.width > 0.7
+      ) {
+        squares.push(image);
+      }
+
+      if (image?.height / image?.width < 0.7) {
+        landscapes.push(image);
+      }
+    });
+
+    return { portraits, landscapes, squares, array };
+  };
+
+  console.log(sorter(favourites));
   return (
     <div
       id="app"
@@ -106,7 +132,7 @@ const Gallery = () => {
                     key={`${card[0]?.id}${card[1]?.id}`}
                     ref={isLastElement ? lastItemRef : null}
                   >
-                    {card.map((image, i) => {
+                    {card.map((image) => {
                       return (
                         <ImageCard
                           image={image}

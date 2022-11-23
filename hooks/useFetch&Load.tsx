@@ -34,7 +34,7 @@ const useFetchnLoad = (
 
       if (id) {
         fetchData(`api/getImageById?id=${id}`).then((data) => {
-          openImage(data.image);
+          if (data) openImage(data.image);
         });
       }
     }
